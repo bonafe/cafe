@@ -1,0 +1,98 @@
+<style>
+    :host {
+        display: block;
+        position: relative;
+        height: 100%;
+        background: #000;
+        overflow: hidden;
+    }
+    .scroller {
+        height: 100%;
+        overflow-y: auto;
+        scroll-snap-type: y mandatory;
+        overscroll-behavior-y: contain;
+        scrollbar-width: none;
+    }
+    .scroller::-webkit-scrollbar { display: none; }
+
+    /* Sized here, not only in the item's own template: until that template loads the item
+       would have no height, and jumping to a slide (#/id) would have nowhere to scroll */
+    cafe-item {
+        display: block;
+        height: 100%;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+    }
+
+    .top {
+        position: absolute;
+        top: calc(12px + env(safe-area-inset-top));
+        left: 16px;
+        right: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 2;
+        pointer-events: none;
+        color: #fff;
+        font: 700 1.1rem system-ui, sans-serif;
+        text-shadow: 0 1px 6px rgba(0,0,0,.6);
+    }
+    button {
+        pointer-events: auto;
+        border: 0;
+        background: rgba(0,0,0,.35);
+        color: #fff;
+        font-size: 1.3rem;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    .stamp {
+        position: absolute;
+        top: calc(64px + env(safe-area-inset-top));
+        left: 16px;
+        z-index: 3;
+        padding: 3px 8px;
+        border-radius: 6px;
+        background: rgba(0,0,0,.6);
+        color: #ff0;
+        font: 11px/1.3 ui-monospace, monospace;
+        pointer-events: none;
+    }
+
+    /* Mouse devices get prev/next buttons; phones page by swiping */
+    .nav { display: none; }
+    @media (hover: hover) and (pointer: fine) {
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            translate: 0 -50%;
+            z-index: 2;
+        }
+    }
+</style>
+
+<div class="scroller" data-ref="scroller">
+    <template data-for="item in items : id">
+        <cafe-item data-bind='{"data-state":"item"}'></cafe-item>
+    </template>
+</div>
+
+<div class="top">
+    <span>bonafe.cafe</span>
+    <button data-ref="sound" data-on='{"click":"toggleSound"}' aria-label="Som">🔇</button>
+</div>
+
+<div class="stamp" data-ref="stamp" hidden></div>
+
+<div class="nav">
+    <button data-on='{"click":"previous"}' aria-label="Anterior">▲</button>
+    <button data-on='{"click":"next"}' aria-label="Próximo">▼</button>
+</div>

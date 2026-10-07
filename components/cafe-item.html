@@ -1,0 +1,135 @@
+<style>
+    :host {
+        display: block;
+        position: relative;
+        height: 100%;
+        overflow: hidden;
+        background: #000;
+        color: #fff;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+    }
+    .media, video, img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    video, img { -webkit-user-drag: none; user-select: none; }
+    :host(:not(.live)) video { opacity: 0; }
+    /* The bar is ours (.scrub): hide whatever native controls or play button the browser adds */
+    video::-webkit-media-controls,
+    video::-webkit-media-controls-enclosure,
+    video::-webkit-media-controls-panel,
+    video::-webkit-media-controls-overlay-play-button,
+    video::-webkit-media-controls-start-playback-button {
+        display: none !important;
+        -webkit-appearance: none;
+    }
+    .textslide {
+        position: absolute;
+        inset: 0;
+        background: #222;
+    }
+    .shade {
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 55%;
+        background: linear-gradient(to top, rgba(0,0,0,.75), rgba(0,0,0,0));
+        pointer-events: none;
+    }
+    .caption {
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        bottom: calc(52px + env(safe-area-inset-bottom));
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+        text-shadow: 0 1px 6px rgba(0,0,0,.6);
+    }
+    h2 { margin: 0; font: 700 1.5rem/1.15 system-ui, sans-serif; }
+    p  { margin: 0; font: 400 1rem/1.35 system-ui, sans-serif; opacity: .95; }
+    .cta {
+        margin-top: 6px;
+        padding: 12px 22px;
+        border-radius: 999px;
+        background: #fff;
+        color: #111;
+        font: 700 1rem system-ui, sans-serif;
+        text-decoration: none;
+        text-shadow: none;
+    }
+    /* Tall invisible touch target around a thin bar; touch-action keeps the feed from
+       scrolling while the finger drags along it */
+    .scrub {
+        position: absolute;
+        left: 0; right: 0;
+        bottom: env(safe-area-inset-bottom);
+        height: 40px;
+        display: flex;
+        align-items: flex-end;
+        touch-action: none;
+        cursor: pointer;
+        z-index: 1;
+    }
+    .progress {
+        width: 100%;
+        height: 3px;
+        background: rgba(255,255,255,.25);
+        transition: height .12s;
+    }
+    .progress div {
+        height: 100%;
+        background: #fff;
+        transform: scaleX(0);
+        transform-origin: left;
+    }
+    :host(.scrubbing) .progress { height: 10px; }
+    .caption { transition: opacity .12s; }
+    :host(.scrubbing) .caption { opacity: 0; }
+    .playicon {
+        position: absolute;
+        top: 50%; left: 50%;
+        translate: -50% -50%;
+        font-size: 4rem;
+        opacity: 0;
+        transition: opacity .15s;
+        pointer-events: none;
+    }
+    :host(.paused) .playicon { opacity: .85; }
+</style>
+
+<span hidden data-template-version="0.2.0"></span>
+
+<div class="media">
+    <template data-if="isVideo">
+        <!-- The poster is a plain image under the video: the video only becomes visible once it is
+             playing, so a slide that hasn't decoded a frame yet shows the poster, never black -->
+        <img class="poster" data-bind='{"src":"poster"}' alt="">
+        <video data-ref="video" playsinline webkit-playsinline muted loop preload="auto"
+               disablepictureinpicture disableremoteplayback controlslist="nodownload nofullscreen noremoteplayback"
+               data-on='{"click":"toggle"}'></video>
+        <div class="playicon">▶</div>
+        <div class="scrub" data-ref="scrub"><div class="progress"><div data-ref="bar"></div></div></div>
+    </template>
+    <template data-else-if="isImage">
+        <img data-bind='{"src":"src"}' alt="">
+    </template>
+    <template data-else>
+        <div class="textslide" data-style='{"background":"bg"}'></div>
+    </template>
+</div>
+
+<div class="shade"></div>
+
+<div class="caption">
+    <h2>{{ title }}</h2>
+    <p>{{ text }}</p>
+    <template data-if="cta_url">
+        <a class="cta" target="_blank" rel="noopener"
+           data-bind='{"href":"cta_url","textContent":"cta_label","download":"download_name"}'></a>
+    </template>
+</div>

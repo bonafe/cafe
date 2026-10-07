@@ -1,0 +1,48 @@
+{
+  "items": [
+    {
+      "id": "cafe-1",
+      "type": "video",
+      "src": "media/exemplo-1.mp4",
+      "poster": "media/exemplo-1.jpg",
+      "title": "Primeiro café",
+      "text": "Vídeo de exemplo, troque por um seu.",
+      "cta_label": "Saiba mais",
+      "cta_url": "https://www.papagaiorinoceronte.net"
+    },
+    {
+      "id": "cafe-2",
+      "type": "video",
+      "src": "media/exemplo-2.mp4",
+      "poster": "media/exemplo-2.jpg",
+      "title": "Segundo café",
+      "text": "Deslize para cima para o próximo."
+    },
+    {
+      "id": "fundo",
+      "type": "image",
+      "src": "media/fundo-1.jpg",
+      "title": "Fundo para o seu vídeo",
+      "text": "Baixe e use como fundo na sua gravação.",
+      "cta_label": "Baixar fundo",
+      "cta_url": "media/fundo-1.jpg",
+      "download_name": "fundo-bonafe.jpg"
+    },
+    {
+      "id": "cafe-3",
+      "type": "video",
+      "src": "media/exemplo-3.mp4",
+      "poster": "media/exemplo-3.jpg",
+      "title": "Terceiro café"
+    },
+    {
+      "id": "site",
+      "type": "link",
+      "bg": "linear-gradient(160deg, #7a3b12, #1b0f08)",
+      "title": "Quer saber mais?",
+      "text": "Conheça o site do Bonafé.",
+      "cta_label": "Abrir o site",
+      "cta_url": "https://www.papagaiorinoceronte.net"
+    }
+  ]
+}
