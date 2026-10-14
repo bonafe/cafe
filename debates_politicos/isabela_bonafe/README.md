@@ -2,7 +2,7 @@
 
 Site estático (HTML/CSS/JS, sem build) criado a partir de uma conversa de WhatsApp sobre o 2º turno de 2026 (Lula × Flávio).
 
-## Páginas (`site/`)
+## Páginas (na raiz desta pasta)
 - `index.html`: visão geral, status dos tópicos, linha da conversa.
 - `topicos.html`: as 15 fichas (`#N` abre o tópico).
 - `graficos.html`: séries oficiais interativas (BCB, IBGE, Banco Mundial/FAO) e resumo por governo.
@@ -18,10 +18,11 @@ Site estático (HTML/CSS/JS, sem build) criado a partir de uma conversa de Whats
 
 ```bash
 python3 -I scripts/baixar_series.py       # atualiza as séries (precisa de internet)
-python3 -I scripts/gerar_dados_site.py    # gera site/data/dados.js e site/data/series.js
-cd site && python3 -m http.server 8000    # abrir http://localhost:8000
+python3 -I scripts/gerar_dados_site.py    # gera data/dados.js e data/series.js
+python3 -m http.server 8000    # abrir http://localhost:8000
 ```
 
 ## Publicação
-Publique **somente** a pasta `site/`. As páginas têm `noindex`, mas link não listado continua acessível a quem tiver o endereço.
-O texto bruto da conversa não vai para o site; só as fichas escritas à mão (inclusive as citações curtas em `topicos.json`).
+O site está na raiz desta pasta (`index.html`), então o GitHub Pages pode servi-la diretamente. Só vai para o repositório o que o `.gitignore` deixa passar:
+a conversa original, `data/mensagens.json` e `scripts/parse.py` ficam de fora. As páginas têm `noindex`, mas link não listado continua acessível a quem tiver o endereço.
+O texto bruto da conversa não vai para o site; só as fichas escritas à mão (anonimizadas, inclusive as citações curtas em `topicos.json`).

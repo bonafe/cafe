@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gera site/data/dados.js (window.DADOS) e site/data/series.js (window.SERIES) a partir de data/.
+"""Gera data/dados.js (window.DADOS) e data/series.js (window.SERIES) a partir de data/.
 
 O site é estático e abre também via file://, por isso os dados vão em .js em vez de fetch().
 Privacidade: o texto bruto da conversa NÃO é publicado; só ids de mensagem e as fichas escritas à mão
@@ -12,13 +12,13 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 D = RAIZ / "data"
-OUT = RAIZ / "site" / "data"
+OUT = RAIZ / "data"
 OUT.mkdir(parents=True, exist_ok=True)
 
 
 def js(nome, valor):
     (OUT / nome).write_text(f"window.{nome.split('.')[0].upper()} = " + json.dumps(valor, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")
-    print(f"site/data/{nome}: {(OUT / nome).stat().st_size} bytes")
+    print(f"data/{nome}: {(OUT / nome).stat().st_size} bytes")
 
 
 topicos = json.load(open(D / "topicos.json", encoding="utf-8"))
