@@ -1,0 +1,23 @@
+{
+  "fome_ibge_grave": {
+    "id": "fome_ibge_grave", "titulo": "Insegurança alimentar grave (IBGE, PNAD)", "unidade": "% dos domicílios",
+    "fonte": "IBGE, PNAD Contínua, segurança alimentar 2023 e 2024 (valores de reportagem sobre o IBGE; tabela original não conferida)",
+    "url": "https://www.diariodepernambuco.com.br/brasil/2025/10/11697873-numero-de-lares-com-inseguranca-alimentar-grave-cai-199-no-brasil.html",
+    "periodicidade": "pontual", "lida_na_fonte": false,
+    "pontos": [{"t": "2023", "v": 4.1}, {"t": "2024", "v": 3.2}]
+  },
+  "fome_ibge_moderada_grave": {
+    "id": "fome_ibge_moderada_grave", "titulo": "Insegurança alimentar moderada ou grave (IBGE)", "unidade": "% dos domicílios",
+    "fonte": "IBGE: POF 2017/18 e PNAD 2024 (metodologias diferentes; valores de reportagem sobre o IBGE; tabela original não conferida)",
+    "url": "https://monitormercantil.com.br/ibge-mais-de-dois-milhoes-de-lares-sairam-da-inseguranca-alimentar-em-2024/",
+    "periodicidade": "pontual", "lida_na_fonte": false,
+    "pontos": [{"t": "2018", "v": 12.7}, {"t": "2024", "v": 7.7}]
+  },
+  "fome_penssan_grave": {
+    "id": "fome_penssan_grave", "titulo": "Insegurança alimentar grave, 'fome' (Rede PENSSAN, VIGISAN)", "unidade": "% da população",
+    "fonte": "Rede PENSSAN, inquéritos VIGISAN: 19,1 milhões de pessoas (2020) e 33,1 milhões (2022), via Idec",
+    "url": "https://idec.org.br/noticia/em-2022-33-milhoes-de-brasileiros-passam-fome-no-brasil",
+    "periodicidade": "pontual", "lida_na_fonte": false,
+    "pontos": [{"t": "2020", "v": 9.0}, {"t": "2022", "v": 15.5}]
+  }
+}

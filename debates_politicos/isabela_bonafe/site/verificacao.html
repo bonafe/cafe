@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Verificação</title>
+<meta name="description" content="Cada afirmação da conversa conferida em fontes oficiais, com veredito, nota e links.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/estilo.css">
+<script>try { var t = localStorage.getItem("tema"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+</head>
+<body data-pagina="verificacao">
+<div id="nav"></div>
+<main class="wide">
+  <p class="kicker" style="margin-top:28px">Fase 2</p>
+  <h1>Verificação das afirmações</h1>
+  <p class="lede">Fato é uma coisa; opinião e valor, outra. Aqui só entram afirmações que podem ser conferidas. Cada uma recebe um veredito, e o mesmo critério vale para quem disse.</p>
+  <details class="card pad2 regras-box" id="regras"><summary>O que significa cada veredito</summary><div id="legenda"></div></details>
+  <div class="filtros" id="fv" role="group" aria-label="Filtrar por veredito"></div>
+  <div class="filtros" id="fq" role="group" aria-label="Filtrar por quem disse"></div>
+  <label class="busca"><span class="sr">Buscar</span><input type="search" id="q" placeholder="Buscar nas afirmações…" autocomplete="off"></label>
+  <label class="check"><input type="checkbox" id="lida"> Só fontes lidas diretamente</label>
+  <p class="small muted" id="cont" role="status"></p>
+  <div id="lista"></div>
+</main>
+<div id="rodape"></div>
+<script src="data/dados.js"></script>
+<script src="assets/site.js"></script>
+<script src="assets/claims.js"></script>
+<script>
+(function () {
+  var D = DADOS, ids = Object.keys(D.claims).sort(function (a, b) { var x = a.split(".").map(Number), y = b.split(".").map(Number); return x[0] - y[0] || x[1] - y[1]; });
+  var est = { v: "todos", q: "todos", busca: "", lida: false };
+  var ordemV = ["verificado", "parcial", "falso", "sem_fonte", "nao_aplica", "pendente"];
+  var quem = function (c) { return c.quem.indexOf("Pessoa A") === 0 ? "Pessoa A" : c.quem.indexOf("Pessoa B") === 0 ? "Pessoa B" : "IA"; };
+  U.$("#legenda").innerHTML = ordemV.filter(function (v) { return ids.some(function (i) { return D.claims[i].veredito === v; }); })
+    .map(function (v) { return '<p style="margin:10px 0 0">' + U.chip(v) + " " + U.esc(D.veredito[v].desc) + "</p>"; }).join("") +
+    '<p class="small muted" style="margin-top:12px">Dado oficial pesa mais que reportagem; reportagem, mais que declaração. "Fonte lida diretamente" significa que li a API ou a página original; as demais se baseiam em resumos de busca.</p>';
+  function filtros() {
+    var cv = {}; ids.forEach(function (i) { var v = D.claims[i].veredito; cv[v] = (cv[v] || 0) + 1; });
+    U.$("#fv").innerHTML = '<button type="button" class="fbtn" data-v="todos" aria-pressed="' + (est.v === "todos") + '">Todos (' + ids.length + ")</button>" +
+      ordemV.filter(function (v) { return cv[v]; }).map(function (v) { return '<button type="button" class="fbtn" data-v="' + v + '" aria-pressed="' + (est.v === v) + '">' + D.veredito[v].icone + " " + D.veredito[v].rotulo + " (" + cv[v] + ")</button>"; }).join("");
+    U.$("#fq").innerHTML = ["todos", "Pessoa A", "Pessoa B", "IA"].map(function (q) { return '<button type="button" class="fbtn" data-q="' + q + '" aria-pressed="' + (est.q === q) + '">' + (q === "todos" ? "Dita por qualquer um" : "Dita por " + q) + "</button>"; }).join("");
+  }
+  function render() {
+    var b = est.busca.toLowerCase();
+    var sel = ids.filter(function (i) {
+      var c = D.claims[i];
+      return (est.v === "todos" || c.veredito === est.v) && (est.q === "todos" || quem(c) === est.q) && (!est.lida || c.lida) &&
+        (!b || (c.texto + " " + c.nota).toLowerCase().indexOf(b) >= 0);
+    });
+    U.$("#cont").textContent = sel.length + " de " + ids.length + " afirmações";
+    U.$("#lista").innerHTML = sel.map(function (i) { return U.claimHTML(i, true); }).join("") || '<p class="muted">Nada encontrado com esses filtros.</p>';
+    filtros(); abrirHash();
+  }
+  function abrirHash() { var h = location.hash.replace("#", ""); if (!h) return; var el = document.getElementById(h); if (el) { el.open = true; el.scrollIntoView({ block: "center" }); } }
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-v],[data-q]"); if (!b || b.closest("details.claim")) return;
+    if (b.dataset.v) est.v = b.dataset.v; if (b.dataset.q) est.q = b.dataset.q; render();
+  });
+  U.$("#q").addEventListener("input", function (e) { est.busca = e.target.value; render(); });
+  U.$("#lida").addEventListener("change", function (e) { est.lida = e.target.checked; render(); });
+  window.addEventListener("hashchange", abrirHash);
+  render();
+})();
+</script>
+<style>.busca input{width:100%;min-height:48px;border:1.5px solid var(--line);border-radius:12px;padding:0 14px;background:var(--surface);margin:4px 0 10px}.check{display:flex;gap:10px;align-items:center;min-height:44px}.check input{width:20px;height:20px}.regras-box summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}</style>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Glossário</title>
+<meta name="description" content="Termos de economia e política usados no site, explicados sem jargão.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/estilo.css">
+<script>try { var t = localStorage.getItem("tema"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+</head>
+<body data-pagina="glossario">
+<div id="nav"></div>
+<main class="wide">
+  <p class="kicker" style="margin-top:28px">Apoio</p>
+  <h1>Glossário</h1>
+  <p class="lede">Palavras que aparecem nos gráficos e nas fichas, em linguagem direta. Quando o termo tem pegadinha, ela está avisada.</p>
+  <label class="busca"><span class="sr">Buscar termo</span><input type="search" id="q" placeholder="Buscar termo…" autocomplete="off"></label>
+  <dl id="dl"></dl>
+</main>
+<div id="rodape"></div>
+<script src="assets/site.js"></script>
+<script>
+(function () {
+  var G = [
+    ["PIB", "Valor de tudo o que o país produz de bens e serviços em um período. 'PIB real' desconta a inflação. Mede produção, não como ela é dividida; empréstimos em si não entram, mas o consumo financiado por eles entra, como qualquer compra."],
+    ["PIB per capita", "PIB dividido pela população. Mostra se a economia cresce mais do que o número de pessoas."],
+    ["IPCA", "Índice oficial de inflação ao consumidor (IBGE). Pegadinha: IPCA de 4% não significa preço menor; significa que os preços subiram 4% em 12 meses. Para os preços caírem, o índice teria de ser negativo."],
+    ["Inflação pessoal", "A inflação que cada família sente depende do que ela compra. Quem gasta mais com comida, aluguel ou energia pode sentir mais do que o IPCA geral."],
+    ["PNAD Contínua", "Pesquisa do IBGE por amostra de domicílios que mede trabalho e renda desde 2012. Por isso não há comparação com anos anteriores na mesma metodologia."],
+    ["Taxa de desocupação", "Parcela da força de trabalho sem trabalho que procurou emprego e estava disponível. Quem desistiu de procurar não conta. Receber Bolsa Família não altera a classificação."],
+    ["Informalidade", "Trabalhadores sem carteira assinada ou CNPJ, entre outros. Mais gente empregada não quer dizer emprego de boa qualidade."],
+    ["Rendimento real", "Renda do trabalho com a inflação descontada. A média pode subir quando saem do mercado os de menor renda; a mediana mostra melhor o 'meio'."],
+    ["FBCF / taxa de investimento", "Formação Bruta de Capital Fixo: gasto com máquinas, obras e construção, público e privado. Dividida pelo PIB, vira a taxa de investimento."],
+    ["Dívida bruta (DBGG)", "Tudo o que o governo geral (União, estados e municípios) deve, em % do PIB. Metodologias do BCB e do FMI diferem; não devem ser misturadas."],
+    ["Dívida líquida", "Dívida bruta descontados os ativos do governo, como reservas. Costuma ser menor que a bruta."],
+    ["Resultado primário", "Receitas menos despesas do governo, sem contar os juros da dívida. Positivo é superávit; negativo, déficit. Nos gráficos deste site, valor acima de zero significa déficit."],
+    ["Resultado nominal", "Resultado primário somado aos juros. É o que de fato aumenta ou reduz a dívida."],
+    ["Juros nominais", "O custo da dívida pública no período. Depende da Selic, que é definida pelo Banco Central, e do tamanho da dívida."],
+    ["Selic", "Taxa básica de juros da economia, definida pelo Comitê de Política Monetária do Banco Central."],
+    ["Endividamento das famílias", "Duas medidas diferentes: (1) a parcela das famílias com alguma dívida (CNC, ~82%) e (2) a dívida em relação à renda de 12 meses (BCB, ~50%). Não são a mesma coisa."],
+    ["Comprometimento de renda", "Parcela da renda mensal que as famílias gastam para pagar parcelas e juros de dívidas com bancos (BCB)."],
+    ["Gini", "Índice de desigualdade de renda, de 0 (todos iguais) a 1 (uma pessoa fica com tudo)."],
+    ["Mapa da Fome (FAO)", "Lista de países em que mais de 2,5% da população está subalimentada, medida em média de três anos."],
+    ["Insegurança alimentar", "Escala: leve (preocupação com a comida), moderada (corte na quantidade) e grave (passar fome). Cada pesquisa (IBGE, FAO, Rede PENSSAN) usa metodologia própria."],
+    ["Pandemia e comparações", "2020 caiu muito e 2021 subiu por rebote; excluir só 2020 distorce. Convém comparar PIB acumulado, antes, durante e depois."],
+    ["Anulação de provas ≠ absolvição", "Anular provas ou processos por vício de procedimento (foro, parcialidade) não decide se a pessoa é culpada ou inocente."],
+    ["Anistia × indulto", "Anistia apaga o crime. Indulto perdoa a pena, mas a condenação continua existindo."],
+    ["Rachadinha", "Esquema em que um funcionário devolve parte do salário ao parlamentar que o contratou. É acusação até que haja condenação."],
+    ["Decisão monocrática", "Decisão de um único ministro do STF, sem o plenário ou a turma."],
+    ["Arcabouço fiscal", "Regra de limites para gastos do governo federal, que substituiu o teto de gastos."],
+    ["Simples Nacional", "Regime de tributação simplificada para micro e pequenas empresas, com tetos de faturamento (MEI, ME e EPP)."],
+    ["Pronampe", "Programa de crédito garantido para micro e pequenas empresas, criado em 2020."]
+  ];
+  function r(f) { var b = (f || "").toLowerCase(); U.$("#dl").innerHTML = G.filter(function (g) { return !b || (g[0] + " " + g[1]).toLowerCase().indexOf(b) >= 0; })
+    .map(function (g) { return '<div class="card gl"><dt>' + U.esc(g[0]) + "</dt><dd>" + U.esc(g[1]) + "</dd></div>"; }).join("") || '<p class="muted">Nenhum termo encontrado.</p>'; }
+  U.$("#q").addEventListener("input", function (e) { r(e.target.value); }); r();
+})();
+</script>
+<style>.busca input{width:100%;min-height:48px;border:1.5px solid var(--line);border-radius:12px;padding:0 14px;background:var(--surface);margin:4px 0 16px}dl{margin:0;display:grid;gap:10px}.gl{padding:14px 16px}.gl dt{font-weight:800;margin-bottom:4px}.gl dd{margin:0;color:var(--ink-2)}@media(min-width:720px){dl{grid-template-columns:1fr 1fr}}</style>
+</body>
+</html>

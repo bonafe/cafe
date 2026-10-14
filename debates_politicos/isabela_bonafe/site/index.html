@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Café com política</title>
+<meta name="description" content="Uma conversa entre duas pessoas sobre o 2º turno de 2026, organizada em tópicos, dados oficiais, verificação de afirmações e uma matriz de decisão.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/estilo.css">
+<script>try { var t = localStorage.getItem("tema"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+</head>
+<body data-pagina="index">
+<div id="nav"></div>
+<main class="wide">
+  <section class="hero">
+    <p class="kicker">2º turno · 25 de outubro de 2026</p>
+    <h1>Duas visões, um voto e muitas dúvidas</h1>
+    <p class="lede">Duas pessoas conversaram por dois dias sobre economia, instituições e confiança nos dados. Este site transforma a conversa em <strong>tópicos</strong>, confere cada afirmação em <strong>fontes oficiais</strong> e permite comparar Lula e Flávio com os <strong>pesos de cada um</strong>.</p>
+    <div class="btns">
+      <a class="btn" href="graficos.html">Ver os gráficos</a>
+      <a class="btn sec" href="matriz.html">Matriz de decisão</a>
+    </div>
+  </section>
+
+  <section class="stats" id="stats" aria-label="Números do projeto"></section>
+
+  <section>
+    <h2>Em 30 segundos</h2>
+    <div class="col2">
+      <div class="card pad2"><p class="kicker">O que é</p><p>Um mapa dos assuntos que apareceram na conversa, com o que cada pessoa pensa, onde concordam e o que ainda está em aberto.</p></div>
+      <div class="card pad2"><p class="kicker">Como usar</p><p>Comece pelos <a href="topicos.html">tópicos</a>, confira o que os <a href="graficos.html">gráficos</a> mostram e veja a <a href="verificacao.html">verificação</a> de cada afirmação.</p></div>
+      <div class="card pad2"><p class="kicker">Cuidado</p><p>Fato e valor são coisas diferentes. Os dados dizem o que aconteceu; quanto isso pesa no voto é escolha de cada pessoa.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>O que já sabemos</h2>
+    <div class="card pad2">
+      <p class="small muted" style="margin-bottom:0">Resultado da verificação das <span id="n-claims"></span> afirmações levantadas:</p>
+      <div class="vbar" id="vbar" role="img" aria-label="Distribuição dos vereditos"></div>
+      <div class="vleg" id="vleg"></div>
+    </div>
+    <div class="callout">
+      <p><strong>Onde concordam:</strong> o PT não é um projeto socialista, a polarização faz mal, e os indicadores existem mas não explicam sozinhos a vida real.</p>
+      <p><strong>Onde divergem:</strong> o grau de confiança nos dados, o risco maior (STF ou golpismo) e a quem atribuir a dívida.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Os 15 tópicos</h2>
+    <div class="grid g2" id="topicos"></div>
+  </section>
+
+  <section>
+    <h2>Como a conversa andou</h2>
+    <ol class="steps" id="linha"></ol>
+  </section>
+
+  <section>
+    <h2>Regras do jogo</h2>
+    <div class="card pad2">
+      <ul class="regras">
+        <li>Todo número tem fonte; quando a fonte não foi lida na íntegra, isso aparece.</li>
+        <li>O mesmo critério vale para os dois candidatos e para as afirmações dos dois participantes.</li>
+        <li>Indício não é condenação. Anulação por vício processual não prova culpa nem inocência.</li>
+        <li>Flávio nunca governou o país: o governo de 2019–2022 é só uma referência de afinidade política.</li>
+        <li>A IA ajudou a levantar hipóteses e fontes, mas não é fonte: onde ela errou o número, o site corrige.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+<div id="rodape"></div>
+<script src="data/dados.js"></script>
+<script src="assets/site.js"></script>
+<script>
+(function () {
+  var D = DADOS, C = Object.keys(D.claims).map(function (k) { return D.claims[k]; });
+  var cont = {}; C.forEach(function (c) { cont[c.veredito] = (cont[c.veredito] || 0) + 1; });
+  U.$("#stats").innerHTML = [[D.topicos.length, "tópicos"], [C.length, "afirmações verificadas"], [Object.keys(window.SERIES || { a: 0 }).length || 25, "séries de dados"], [D.matriz.criterios.length, "critérios na matriz"]]
+    .map(function (s, i) { return '<div class="card stat"><b id="st' + i + '">' + s[0] + "</b><span>" + s[1] + "</span></div>"; }).join("");
+  U.$("#n-claims").textContent = C.length;
+  var ordem = ["verificado", "parcial", "falso", "sem_fonte", "nao_aplica", "pendente"];
+  var cor = { verificado: "var(--v-verificado)", parcial: "var(--v-parcial)", falso: "var(--v-falso)", sem_fonte: "var(--ink-2)", nao_aplica: "var(--line)", pendente: "var(--surface-2)" };
+  U.$("#vbar").innerHTML = ordem.map(function (v) { return cont[v] ? '<i style="width:' + (100 * cont[v] / C.length).toFixed(2) + '%;background:' + cor[v] + '" title="' + D.veredito[v].rotulo + ": " + cont[v] + '"></i>' : ""; }).join("");
+  U.$("#vleg").innerHTML = ordem.filter(function (v) { return cont[v]; }).map(function (v) { return '<span><span class="dot" style="background:' + cor[v] + '"></span><b>' + cont[v] + "</b> " + D.veredito[v].rotulo.toLowerCase() + "</span>"; }).join("");
+  var ord = D.topicos.slice().sort(function (a, b) { return a.id - b.id; });
+  U.$("#topicos").innerHTML = ord.map(function (t) {
+    return '<a class="card tcard" href="topicos.html#' + t.id + '"><span class="kicker">Tópico ' + t.id + "</span>" + U.status(t.status) + "<h3>" + U.esc(t.titulo) + "</h3><p>" + U.esc(t.conclusao.split(". ")[0].replace(/\.$/, "")) + ".</p></a>";
+  }).join("");
+  var L = [
+    ["Preocupações iniciais", "A Pessoa B teme um novo governo e a soberania nacional; a Pessoa A fala de economia, dívida das famílias, STF e educação."],
+    ["Ir ponto a ponto", "Combinam sistematizar a conversa e usar IA para organizar os dados, começando pela economia."],
+    ["Indicadores", "A IA monta uma série de FHC a Lula III. A Pessoa B vê indicadores bons; a Pessoa A estranha, porque 'na rua' não é o que ela vê."],
+    ["Dados × percepção", "Discutem pandemia, o que é inflação, dívida pública e das famílias. Concluem que há tensão, não contradição estatística."],
+    ["Dados são confiáveis?", "A Pessoa A pergunta se há 'maquiagem'. A Pessoa B responde que, se todos manipulassem, a comparação continuaria valendo."],
+    ["Dívida pública", "A pergunta central do dia seguinte: como a dívida cresce junto de bons índices? A Pessoa A traz suas leituras."],
+    ["Ideologia, STF e integridade", "Em áudios longos, falam de socialismo e capitalismo, do poder do STF, de rachadinha e de golpe."],
+    ["Verificação", "Cada afirmação é conferida em fonte oficial; os gráficos e a matriz nascem desse trabalho."]
+  ];
+  U.$("#linha").innerHTML = L.map(function (l) { return "<li><b>" + U.esc(l[0]) + "</b>" + U.esc(l[1]) + "</li>"; }).join("");
+})();
+</script>
+<script src="data/series.js"></script>
+<script>document.getElementById("st2").textContent = Object.keys(window.SERIES).length;</script>
+<style>.pad2{padding:16px}.pad2 p{margin:0}.regras{margin:0;padding-left:20px}.regras li{margin-bottom:6px}</style>
+</body>
+</html>

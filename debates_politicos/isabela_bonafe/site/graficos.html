@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gráficos</title>
+<meta name="description" content="Séries históricas oficiais (BCB, IBGE, Banco Mundial/FAO) por governo: economia, dívida, renda, fome e pobreza.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/estilo.css">
+<script>try { var t = localStorage.getItem("tema"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+</head>
+<body data-pagina="graficos">
+<div id="nav"></div>
+<main class="wide">
+  <p class="kicker" style="margin-top:28px">Dados oficiais</p>
+  <h1>Os números por trás da conversa</h1>
+  <p class="lede">Séries do Banco Central, do IBGE e do Banco Mundial/FAO, baixadas direto das fontes. Toque ou passe o mouse sobre o gráfico para ver cada valor. O fundo cinza alterna os governos (anos civis).</p>
+  <div class="callout"><p><strong>Cuidado ao ler:</strong> gráfico mostra o que aconteceu durante cada governo, não o que cada governo causou. Pandemia, preço de commodities e juros globais pesam em todos. Cada gráfico traz uma leitura e uma lista do que ele <em>não</em> mostra.</p></div>
+  <nav class="ancoras" id="anc" aria-label="Ir para um gráfico"></nav>
+  <section id="g-governo" class="card gcard"></section>
+  <div id="graficos"></div>
+</main>
+<div id="rodape"></div>
+<script src="data/dados.js"></script>
+<script src="data/series.js"></script>
+<script src="assets/site.js"></script>
+<script src="assets/graficos.js"></script>
+</body>
+</html>

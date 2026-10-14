@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Matriz de decisão</title>
+<meta name="description" content="Compare Lula e Flávio por critérios, com os seus próprios pesos. As notas partem das evidências verificadas na conversa entre duas pessoas.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/estilo.css">
+<link rel="stylesheet" href="assets/matriz.css">
+<script>
+  // Aplica o tema salvo antes de pintar, para evitar flash.
+  try { var t = localStorage.getItem("tema"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+</head>
+<body data-pagina="matriz">
+<div id="nav"></div>
+<main>
+
+  <header>
+    <p class="eyebrow">Fase 3 · Matriz de decisão</p>
+    <h1>Lula × Flávio, com os seus pesos</h1>
+    <p class="lede">Dez critérios saíram da conversa. Cada um tem notas apoiadas nas evidências verificadas. Você escolhe <strong>o quanto cada critério pesa</strong> e vê como o resultado muda.</p>
+    <details class="como card">
+      <summary>Como ler esta página</summary>
+      <ol>
+        <li><strong>Escolha quem está usando</strong> (cada pessoa tem pesos e notas próprios, salvos neste aparelho).</li>
+        <li><strong>Ajuste o peso</strong> de cada critério, de 0 (ignorar) a 5 (decisivo).</li>
+        <li><strong>Abra o critério</strong> para ver as evidências e, se discordar, <strong>mude a nota</strong>.</li>
+      </ol>
+      <p class="small muted" id="escala"></p>
+      <p class="small muted" id="regras"></p>
+    </details>
+    <p class="aviso" id="aviso"></p>
+  </header>
+
+  <section aria-labelledby="h-perfil">
+    <h2 id="h-perfil">Quem está usando?</h2>
+    <div class="tabs" role="group" aria-label="Perfil" id="tabs"></div>
+    <p class="small muted" id="perfil-dica"></p>
+  </section>
+
+  <section aria-labelledby="h-res" id="resultado">
+    <h2 id="h-res">Resultado com estes pesos</h2>
+    <div class="card res" aria-live="polite">
+      <div id="res-barras"></div>
+      <p id="res-msg" class="res-msg"></p>
+      <p id="res-forte" class="small muted"></p>
+    </div>
+
+    <h2>O que decide</h2>
+    <p class="small muted">Cada barra mostra quanto o critério empurra o resultado, já considerando o peso. Quanto maior, mais ele decide.</p>
+    <div class="card pad" id="decide"></div>
+
+    <h2>E se um critério fosse ignorado?</h2>
+    <div class="card pad" id="sens"></div>
+  </section>
+
+  <section aria-labelledby="h-crit">
+    <h2 id="h-crit">Os critérios</h2>
+    <p class="small muted">Os candidatos aparecem em ordem alfabética. As notas vão de 1 a 5; <span class="conf-baixa-demo">pontilhado</span> marca nota de confiança baixa.</p>
+    <div id="criterios"></div>
+  </section>
+
+  <section>
+    <h2>Limites</h2>
+    <ul class="limites" id="limites"></ul>
+    <p class="small muted">Esta página organiza a discussão; ela não recomenda um voto. Nenhum partido ou candidato pagou, revisou ou influenciou o conteúdo.</p>
+    <p class="small"><button class="link" type="button" id="copiar">Copiar link com estes pesos e notas</button> <span id="copiado" class="small muted" role="status"></span></p>
+  </section>
+</main>
+
+<div class="placar" id="placar" role="status" aria-label="Placar atual">
+  <a href="#resultado" class="placar-in">
+    <span class="c-flavio"><b id="pl-f">–</b> Flávio</span>
+    <span class="pl-dif" id="pl-d">–</span>
+    <span class="c-lula">Lula <b id="pl-l">–</b></span>
+  </a>
+</div>
+
+<div id="rodape"></div>
+<script src="data/dados.js"></script>
+<script src="assets/site.js"></script>
+<script src="assets/matriz.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+# ---- Conversa original e derivados: NUNCA publicar ----
+*.txt
+data/mensagens.json
+
+# ---- Ambiente e lixo ----
+__pycache__/
+*.pyc
+.DS_Store
+.env
+.env.*
+*.log
+*.swp
+.claude/
+
+# ---- Script que contém os nomes reais dos remetentes do chat ----
+scripts/parse.py

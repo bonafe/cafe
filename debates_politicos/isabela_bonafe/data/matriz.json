@@ -1,0 +1,631 @@
+{
+  "meta": {
+    "titulo": "Matriz de decisão: Lula × Flávio",
+    "versao": "2026-10-14",
+    "candidatos": [
+      {
+        "id": "lula",
+        "nome": "Lula",
+        "cor": "violeta",
+        "referencia": "Histórico = governo Lula III (2023–2025/26) + plano de governo."
+      },
+      {
+        "id": "flavio",
+        "nome": "Flávio",
+        "cor": "âmbar",
+        "referencia": "Flávio nunca governou o país. Histórico = governo de 2019–2022 (Jair), usado só como referência de afinidade política, + plano de governo + o que se sabe dele próprio."
+      }
+    ],
+    "escala": [
+      "1 = evidência desfavorável clara",
+      "2 = mais pontos fracos que fortes",
+      "3 = neutro, misto ou evidência insuficiente para distinguir",
+      "4 = mais pontos fortes que fracos",
+      "5 = evidência favorável clara"
+    ],
+    "regras": [
+      "A nota resume a evidência reunida nas fichas; não é uma medida objetiva. Cada pessoa pode mudar qualquer nota.",
+      "Quando só existe plano de governo (promessa) e não há registro de resultado, a nota fica perto de 3 e a confiança é baixa.",
+      "O mesmo padrão vale para os dois: dado oficial pesa mais que plano, plano mais que declaração de campanha, e indício não é condenação.",
+      "Critérios 'de valores' dependem do que cada um considera mais grave; a nota proposta é só um ponto de partida."
+    ],
+    "aviso": "Este instrumento organiza a discussão. Ele não escolhe o voto por vocês: o resultado muda com os pesos, e a escolha dos pesos é de valor, não de dado.",
+    "nota_cores": "Violeta e âmbar foram escolhidos de propósito longe das cores partidárias; a ordem na tela é alfabética (Flávio, Lula)."
+  },
+  "criterios": [
+    {
+      "id": "crescimento_emprego",
+      "nome": "Crescimento e emprego",
+      "pergunta": "A economia cresce e há trabalho?",
+      "tipo": "dados",
+      "topicos": [
+        1,
+        2
+      ],
+      "citado_por": {
+        "pessoa_a": [
+          18,
+          20
+        ],
+        "pessoa_b": [
+          114,
+          116,
+          183
+        ]
+      },
+      "notas": {
+        "lula": {
+          "nota": 4,
+          "confianca": "media",
+          "base": "histórico",
+          "resumo": "Crescimento acima do governo anterior e menor desemprego da série.",
+          "evidencias": [
+            {
+              "texto": "PIB médio de 2,97% ao ano em 2023–25, contra 1,43% em 2019–22.",
+              "ref": "1.1"
+            },
+            {
+              "texto": "Desocupação média de 5,88% em 2025 (a menor da série da PNAD) e 5,4% em jun/2026.",
+              "ref": "1.3"
+            },
+            {
+              "texto": "Taxa de investimento de 16,7%, igual à do governo anterior (16,9%): sem salto de investimento.",
+              "ref": "1.4"
+            },
+            {
+              "texto": "O mercado projeta desaceleração: PIB de ~1,9% em 2026 e 1,5% em 2027 (Focus).",
+              "ref": "3.4"
+            }
+          ]
+        },
+        "flavio": {
+          "nota": 2,
+          "confianca": "baixa",
+          "base": "histórico (Jair) + plano",
+          "resumo": "Referência fraca por causa da pandemia; o plano promete crescimento sem quantificar o custo.",
+          "evidencias": [
+            {
+              "texto": "No governo 2019–22 o PIB cresceu 1,43% ao ano (−3,3% em 2020, +4,8% em 2021) e a desocupação média foi de 12,1%.",
+              "ref": "1.1"
+            },
+            {
+              "texto": "A pandemia distorce a comparação, em sentido contrário ao de Lula III (rebote de 2021).",
+              "ref": "2.1"
+            },
+            {
+              "texto": "O plano fala em 'tesouraço' de R$ 190 bi e crescimento de 4% ao ano, sem custo consolidado.",
+              "ref": "t3",
+              "fonte": "https://forbes.com.br/forbes-money/2026/10/tesouraco-flavio-bolsonaro-plano-economico/"
+            }
+          ]
+        }
+      },
+      "contraponto": "Parte do bom resultado atual é pós-pandemia, e a conta do crescimento vem com juros altos e dívida maior (ver Contas públicas). Quem pesa mais o que 'se sente na rua' pode dar menos peso a este critério."
+    },
+    {
+      "id": "contas_publicas",
+      "nome": "Contas públicas e dívida",
+      "pergunta": "A trajetória da dívida é sustentável?",
+      "tipo": "dados",
+      "topicos": [
+        3
+      ],
+      "citado_por": {
+        "pessoa_a": [
+          213,
+          269,
+          348,
+          352
+        ],
+        "pessoa_b": [
+          118,
+          252
+        ]
+      },
+      "notas": {
+        "lula": {
+          "nota": 2,
+          "confianca": "alta",
+          "base": "histórico",
+          "resumo": "Dívida em alta, com juros pesados; a origem (juros ou gasto primário) é disputada.",
+          "evidencias": [
+            {
+              "texto": "Dívida bruta de 71,7% (dez/2022) para 78,6% (dez/2025) e 82,9% (ago/2026): +11,2 p.p.",
+              "ref": "3.1"
+            },
+            {
+              "texto": "Juros nominais de 8,86% do PIB em 12 meses, com déficit primário de 0,62%.",
+              "ref": "3.2"
+            },
+            {
+              "texto": "Déficit primário de 2,28% do PIB em 2023, caindo para ~0,4% em 2024 e 2025.",
+              "ref": "3.3"
+            },
+            {
+              "texto": "O arcabouço fiscal é mantido no plano.",
+              "ref": "t3",
+              "fonte": "https://congressoemfoco.com.br/noticia/121121/pt-registra-novo-plano-de-governo-de-lula-no-tse-veja-a-integra"
+            }
+          ]
+        },
+        "flavio": {
+          "nota": 3,
+          "confianca": "baixa",
+          "base": "histórico (Jair) + plano",
+          "resumo": "Dívida caiu em 2021–22, em boa parte por inflação; o plano promete cortes sem meta.",
+          "evidencias": [
+            {
+              "texto": "Dívida bruta de 75,3% (2018) para 71,7% (2022): −3,6 p.p., com −15,3 p.p. só em 2021–22.",
+              "ref": "3.3"
+            },
+            {
+              "texto": "A queda veio sobretudo do PIB nominal inflado (IPCA de 10,06% em 2021), com superávit primário em 2021–22.",
+              "ref": "3.3"
+            },
+            {
+              "texto": "O plano troca a regra fiscal, corta R$ 190 bi e retoma privatizações, mas não traz meta fiscal nem estimativa de perda de arrecadação.",
+              "ref": "t3",
+              "fonte": "https://www.congressoemfoco.com.br/amp/artigo/119689/propostas-economicas-e-fiscais-dos-principais-candidatos-de-2026"
+            }
+          ]
+        }
+      },
+      "contraponto": "A decisão dos juros é do Banco Central, e não só do governo. A Pessoa B tende a ver na queda de receita e de gastos sociais um custo que a dívida não mostra."
+    },
+    {
+      "id": "poder_de_compra",
+      "nome": "Poder de compra e custo de vida",
+      "pergunta": "O dinheiro de uma família rende mais?",
+      "tipo": "dados",
+      "topicos": [
+        4
+      ],
+      "citado_por": {
+        "pessoa_a": [
+          28,
+          152,
+          265,
+          267
+        ],
+        "pessoa_b": [
+          262
+        ]
+      },
+      "notas": {
+        "lula": {
+          "nota": 3,
+          "confianca": "media",
+          "base": "histórico",
+          "resumo": "Renda real subiu bastante, mas o endividamento das famílias segue alto.",
+          "evidencias": [
+            {
+              "texto": "Rendimento real do trabalho +14% entre 2022 e 2025 (médias anuais); +4% em 2025 (a IA dizia +5,7%).",
+              "ref": "4.3"
+            },
+            {
+              "texto": "IPCA médio de 4,57% ao ano em 2023–25. Alimentos subiram 7,69% em 2024, mas só 2,95% em 2025; habitação, 6,79% em 2025.",
+              "ref": "4.4"
+            },
+            {
+              "texto": "81,7% das famílias endividadas em set/2026 (CNC), a primeira queda do ano; comprometimento da renda de 28,1% no fim de 2025.",
+              "ref": "4.2"
+            }
+          ]
+        },
+        "flavio": {
+          "nota": 2,
+          "confianca": "baixa",
+          "base": "histórico (Jair) + plano",
+          "resumo": "Renda real caiu no governo anterior; o plano promete reduzir o custo de vida sem números.",
+          "evidencias": [
+            {
+              "texto": "Rendimento real −4,4% entre 2018 e 2022; IPCA de 10,06% em 2021 (choque global).",
+              "ref": "1.2"
+            },
+            {
+              "texto": "O plano prevê 'Brasil mais barato' e IVA em torno de 20% revisando a reforma tributária, sem custo estimado.",
+              "ref": "t3",
+              "fonte": "https://www.congressoemfoco.com.br/amp/artigo/119689/propostas-economicas-e-fiscais-dos-principais-candidatos-de-2026"
+            }
+          ]
+        }
+      },
+      "contraponto": "É este critério que a Pessoa A sente 'na rua'. A média nacional pode esconder quem ganha menos, e a percepção também reflete preços de anos atrás. As evidências de percepção não entram na nota."
+    },
+    {
+      "id": "pequeno_empresario",
+      "nome": "Pequeno empresário",
+      "pergunta": "É viável abrir e manter um pequeno negócio?",
+      "tipo": "dados",
+      "topicos": [
+        7
+      ],
+      "citado_por": {
+        "pessoa_a": [
+          39,
+          185,
+          186,
+          187,
+          301,
+          302
+        ],
+        "pessoa_b": [
+          305,
+          307
+        ]
+      },
+      "notas": {
+        "lula": {
+          "nota": 3,
+          "confianca": "baixa",
+          "base": "histórico",
+          "resumo": "Sem dado que separe os dois governos; reforma tributária em transição.",
+          "evidencias": [
+            {
+              "texto": "Pronampe relançado em 2024 (~R$ 5 bi em dois dias). Recorde de aberturas de pequenos negócios (4,6 milhões em jan–nov/2025).",
+              "ref": "7.1"
+            },
+            {
+              "texto": "Reforma tributária (IBS/CBS) com transição gradual e dúvidas sobre créditos para quem sair do Simples.",
+              "ref": "7.2"
+            }
+          ]
+        },
+        "flavio": {
+          "nota": 3,
+          "confianca": "baixa",
+          "base": "histórico (Jair) + plano",
+          "resumo": "Também sem série comparável; propõe desburocratização.",
+          "evidencias": [
+            {
+              "texto": "O Pronampe foi criado em 2020 (~R$ 25 bi para mais de 320 mil empresas) e relançado em 2022 (R$ 18,7 bi).",
+              "ref": "7.1"
+            },
+            {
+              "texto": "O plano prevê desburocratização, revisão da reforma tributária e retomada da reforma trabalhista de 2017 (contratos por hora).",
+              "ref": "t3",
+              "fonte": "https://www.congressoemfoco.com.br/amp/artigo/119689/propostas-economicas-e-fiscais-dos-principais-candidatos-de-2026"
+            }
+          ]
+        }
+      },
+      "contraponto": "O argumento da experiência familiar com pequenos negócios é concreto e verificável, mas ainda não há comparação por governo da carga sobre a pequena empresa. É a maior lacuna factual da matriz."
+    },
+    {
+      "id": "educacao_ciencia_cultura",
+      "nome": "Educação, ciência e cultura",
+      "pergunta": "Pesquisa, escola e cultura são prioridade?",
+      "tipo": "misto",
+      "topicos": [
+        8
+      ],
+      "citado_por": {
+        "pessoa_a": [
+          19,
+          143,
+          172,
+          174,
+          290,
+          293
+        ],
+        "pessoa_b": []
+      },
+      "notas": {
+        "lula": {
+          "nota": 3,
+          "confianca": "baixa",
+          "base": "plano + histórico parcial",
+          "resumo": "Plano priorizando universidades e escola integral, mas o orçamento de 2026 de ciência foi cortado no Congresso.",
+          "evidencias": [
+            {
+              "texto": "O plano prevê escola em tempo integral e continuidade dos investimentos em universidades e institutos federais.",
+              "ref": "t8",
+              "fonte": "https://www.gazetasp.com.br/politica/eleicoes-2026-compare-as-propostas-de-governo-de-flavio-bolsonaro-e-lula-para-os-proximos-quatro-anos/"
+            },
+            {
+              "texto": "Rouanet bateu R$ 3,41 bi em 2025, contra ~R$ 1,8 bi por ano em 2019–22 (valores nominais).",
+              "ref": "8.3"
+            },
+            {
+              "texto": "LOA 2026: CNPq −R$ 92 mi e Capes −R$ 359 mi, universidades federais ~−R$ 500 mi; ciência é 0,35% do orçamento.",
+              "ref": "8.1"
+            }
+          ]
+        },
+        "flavio": {
+          "nota": 2,
+          "confianca": "baixa",
+          "base": "plano (histórico não pesquisado)",
+          "resumo": "Plano com pouco detalhe sobre ciência e universidades; lacuna no histórico.",
+          "evidencias": [
+            {
+              "texto": "O plano cita financiamento estudantil pago após o emprego e o Pé-de-Meia; nas fontes que li não há proposta específica para ciência ou universidades.",
+              "ref": "t8",
+              "fonte": "https://www.gazetasp.com.br/politica/eleicoes-2026-compare-as-propostas-de-governo-de-flavio-bolsonaro-e-lula-para-os-proximos-quatro-anos/"
+            },
+            {
+              "texto": "A série do MEC por governo, em valores reais, não foi encontrada (lacuna).",
+              "ref": "8.1"
+            }
+          ]
+        }
+      },
+      "contraponto": "É a célula mais frágil: a nota de Flávio vem sobretudo da ausência de detalhe no plano, e o corte de uma agência estadual citado na conversa não é federal."
+    },
+    {
+      "id": "fome_pobreza",
+      "nome": "Fome, pobreza e desigualdade",
+      "pergunta": "Os mais pobres estão melhor?",
+      "tipo": "dados",
+      "topicos": [
+        9
+      ],
+      "citado_por": {
+        "pessoa_a": [
+          298
+        ],
+        "pessoa_b": [
+          294,
+          295
+        ]
+      },
+      "notas": {
+        "lula": {
+          "nota": 4,
+          "confianca": "media",
+          "base": "histórico",
+          "resumo": "Todas as medidas de fome e pobreza caíram desde 2022, em parte por efeito pós-pandemia.",
+          "evidencias": [
+            {
+              "texto": "Insegurança alimentar grave em 4,1% (2023) e 3,2% (2024) dos domicílios (IBGE); Brasil fora do Mapa da Fome em 2022–24 (FAO).",
+              "ref": "9.1"
+            },
+            {
+              "texto": "Pobreza (< US$ 6,85/dia) de 30,6% (2021) para 20,6% (2024); Gini de 0,517 (2022) para 0,504 (2024) e 0,511 (2025).",
+              "ref": "9.1"
+            }
+          ]
+        },
+        "flavio": {
+          "nota": 2,
+          "confianca": "baixa",
+          "base": "histórico (Jair)",
+          "resumo": "A fome subiu até 2021–22 no governo anterior; o plano não traz medida específica.",
+          "evidencias": [
+            {
+              "texto": "PENSSAN: de 19,1 milhões (2020) a 33,1 milhões (2022) de pessoas com fome. Gini 0,543 em 2021.",
+              "ref": "9.1"
+            },
+            {
+              "texto": "Em 2020 a pobreza caiu com o auxílio emergencial (20,8%) e voltou a subir em 2021 (30,6%).",
+              "ref": "9.1"
+            }
+          ]
+        }
+      },
+      "contraponto": "Pandemia, auxílio e retomada confundem a atribuição. Em ambos os governos o efeito do Estado é parcial, e a Pessoa A lembra que pessoas empregadas ainda fazem bicos."
+    },
+    {
+      "id": "instituicoes_democracia",
+      "nome": "Instituições e democracia",
+      "pergunta": "Os poderes se equilibram e a lei vale para todos?",
+      "tipo": "valores",
+      "topicos": [
+        10
+      ],
+      "citado_por": {
+        "pessoa_a": [
+          23,
+          359
+        ],
+        "pessoa_b": [
+          358
+        ]
+      },
+      "notas": {
+        "lula": {
+          "nota": 3,
+          "confianca": "media",
+          "base": "histórico + plano",
+          "resumo": "Os alvos da crítica (STF) são decisões da Corte, não do Executivo, mas a regulação das redes divide.",
+          "evidencias": [
+            {
+              "texto": "Decisões do STF contestadas: anulação das provas da Odebrecht (Toffoli, 2023, recursos suspensos) e o inquérito das fake news (aberto de ofício).",
+              "ref": "10.1"
+            },
+            {
+              "texto": "Lula defende regular as redes (via Congresso ou STF); a oposição chama de censura, o governo nega.",
+              "ref": "t10",
+              "fonte": "https://exame.com/brasil/lula-defende-regulamentacao-das-redes-diz-que-congresso-precisa-atuar-ou-stf-vai-ter-que-regular/"
+            },
+            {
+              "texto": "Não encontrei ato do Executivo para desrespeitar decisão judicial ou o resultado eleitoral.",
+              "ref": "t10"
+            }
+          ]
+        },
+        "flavio": {
+          "nota": 2,
+          "confianca": "media",
+          "base": "plano + declarações",
+          "resumo": "Propõe limitar o STF (que a Pessoa A pede), mas promete anistia e indulto a condenados por tentativa de golpe.",
+          "evidencias": [
+            {
+              "texto": "Propostas: limitar decisões monocráticas, retirar competências penais originárias do STF, quarentena de ministros e fim da reeleição.",
+              "ref": "t10",
+              "fonte": "https://www.band.com.br/politica/eleicoes/2026/flavio-propoe-limitar-stf-reduzir-maioridade-e-acabar-com-reeleicao-202608131847"
+            },
+            {
+              "texto": "Promete anistia irrestrita ao 8 de janeiro e, segundo a imprensa, indulto ao pai, condenado a 27 anos e 3 meses por golpe de Estado (4 a 1) e em cumprimento de pena.",
+              "ref": "10.2",
+              "fonte": "https://www.itatiaia.com.br/politica/eleicoes/flavio-bolsonaro-defende-anistia-e-endurece-discurso-contra-governo-lula/"
+            }
+          ]
+        }
+      },
+      "contraponto": "Os dois riscos são de natureza diferente: concentração de poder no Judiciário (Pessoa A) × tolerância com golpismo (Pessoa B). Pesos muito diferentes aqui podem inverter o resultado sozinhos."
+    },
+    {
+      "id": "integridade_transparencia",
+      "nome": "Integridade e transparência",
+      "pergunta": "Há suspeitas sérias e resposta clara a elas?",
+      "tipo": "misto",
+      "topicos": [
+        11
+      ],
+      "citado_por": {
+        "pessoa_a": [
+          356
+        ],
+        "pessoa_b": [
+          358
+        ]
+      },
+      "notas": {
+        "lula": {
+          "nota": 2,
+          "confianca": "baixa",
+          "base": "histórico",
+          "resumo": "Condenações anuladas por processo, não por absolvição; sigilo na LAI em disputa.",
+          "evidencias": [
+            {
+              "texto": "Condenações da Lava Jato anuladas pelo STF em 2021 (parcialidade de Moro, incompetência) e casos prescritos; provas da Odebrecht anuladas em 2023.",
+              "ref": "10.1"
+            },
+            {
+              "texto": "Negativas de acesso à informação por sigilo: de 28% para 34% das negativas; a CGU contesta o critério (1,74% do total em 2023–24).",
+              "ref": "11.2"
+            }
+          ]
+        },
+        "flavio": {
+          "nota": 2,
+          "confianca": "baixa",
+          "base": "histórico próprio + governo Jair",
+          "resumo": "Denúncia de rachadinha com provas anuladas por foro, sem condenação.",
+          "evidencias": [
+            {
+              "texto": "MP-RJ denunciou: a mãe e a ex-mulher de Adriano da Nóbrega estavam lotadas no gabinete dele na Alerj. Flávio nega; em 2021 o STJ anulou as provas por foro.",
+              "ref": "11.1"
+            },
+            {
+              "texto": "No governo 2019–22, ao menos 65 pedidos de LAI receberam sigilo de 100 anos.",
+              "ref": "11.2"
+            }
+          ]
+        }
+      },
+      "contraponto": "Indício não é condenação, para os dois. A anulação por vício processual não prova culpa nem inocência. A Pessoa B propôs o levantamento lado a lado; ele só foi feito em resumo."
+    },
+    {
+      "id": "soberania_externa",
+      "nome": "Soberania e relações externas",
+      "pergunta": "O país negocia com os EUA sem se submeter nem se isolar?",
+      "tipo": "valores",
+      "topicos": [
+        12
+      ],
+      "citado_por": {
+        "pessoa_a": [
+          68,
+          359
+        ],
+        "pessoa_b": [
+          11,
+          13,
+          14,
+          15
+        ]
+      },
+      "notas": {
+        "lula": {
+          "nota": 3,
+          "confianca": "baixa",
+          "base": "histórico",
+          "resumo": "Defende a soberania, mas o conflito com os EUA tem custo comercial.",
+          "evidencias": [
+            {
+              "texto": "Tarifa de 50% dos EUA em 2025 (a carta citou o julgamento de Jair); derrubada pela Suprema Corte dos EUA em fev/2026; novas tarifas em jul/2026.",
+              "ref": "t12",
+              "fonte": "https://www.aosfatos.org/noticias/trump-nao-cancelou-tarifa/"
+            },
+            {
+              "texto": "A campanha usa a soberania como eixo ('O Brasil não se entrega').",
+              "ref": "t12",
+              "fonte": "https://www.opovo.com.br/noticias/mundo/2026/08/02/amp/lula-busca-reeleicao-sob-a-sombra-de-trump.html"
+            }
+          ]
+        },
+        "flavio": {
+          "nota": 3,
+          "confianca": "baixa",
+          "base": "declarações",
+          "resumo": "Aposta na aproximação com os EUA; a oposição o acusa de subserviência, ele nega.",
+          "evidencias": [
+            {
+              "texto": "Pediu a Trump, Vance e Rubio que empresas brasileiras fossem poupadas de novas tarifas; culpa a política externa do governo Lula pela crise.",
+              "ref": "t12",
+              "fonte": "https://www.congressoemfoco.com.br/noticia/120277/flavio-estende-viagem-nos-eua-para-novas-reunioes-com-aliados-de-trump"
+            },
+            {
+              "texto": "Lula o chama de 'traidor da pátria'; Flávio nega.",
+              "ref": "t12"
+            }
+          ]
+        }
+      },
+      "contraponto": "A Pessoa B teme submissão aos EUA e a perda de controle sobre minerais (14 de 27 grandes mineradoras são estrangeiras, nas duas gestões); a Pessoa A teme o isolamento comercial. Nenhum plano foi analisado a fundo."
+    },
+    {
+      "id": "seguranca_publica",
+      "nome": "Segurança pública e crime organizado",
+      "pergunta": "Quem combate melhor o crime organizado?",
+      "tipo": "misto",
+      "topicos": [
+        11
+      ],
+      "citado_por": {
+        "pessoa_a": [
+          33
+        ],
+        "pessoa_b": [
+          358
+        ]
+      },
+      "nota_criterio": "Critério novo: não foi discutido na conversa, mas é eixo central dos planos. Se não for relevante para vocês, zerem o peso.",
+      "notas": {
+        "lula": {
+          "nota": 3,
+          "confianca": "baixa",
+          "base": "plano",
+          "resumo": "Propõe criar um Ministério da Segurança Pública; sem dados de resultado levantados.",
+          "evidencias": [
+            {
+              "texto": "O plano prevê o Ministério da Segurança Pública. Pesquisa citada pela imprensa mostra que o eleitorado associa mais a oposição à repressão ao crime organizado.",
+              "ref": "t11",
+              "fonte": "https://congressoemfoco.com.br/noticia/121121/pt-registra-novo-plano-de-governo-de-lula-no-tse-veja-a-integra"
+            }
+          ]
+        },
+        "flavio": {
+          "nota": 3,
+          "confianca": "baixa",
+          "base": "plano",
+          "resumo": "Plano duro (narcoterrorismo, fronteiras, presídios); resultados não verificados.",
+          "evidencias": [
+            {
+              "texto": "O plano classifica facções como narcoterroristas, prevê presença militar nas fronteiras, 500 mil vagas em presídios e redução da maioridade penal para 16 anos.",
+              "ref": "t11",
+              "fonte": "https://www.band.com.br/politica/eleicoes/2026/flavio-propoe-limitar-stf-reduzir-maioridade-e-acabar-com-reeleicao-202608131847"
+            },
+            {
+              "texto": "A ligação do gabinete com a família de Adriano da Nóbrega (miliciano) é citada pela Pessoa B como contradição.",
+              "ref": "t11"
+            }
+          ]
+        }
+      },
+      "contraponto": "Falta qualquer série de homicídios, apreensões ou presos por governo. Antes de pesar muito, vale pesquisar resultados (Anuário do Fórum de Segurança Pública)."
+    }
+  ]
+}
