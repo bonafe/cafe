@@ -5,7 +5,7 @@
   U.claimHTML = function (id, mostrarTopico) {
     var c = DADOS.claims[id]; if (!c) return "";
     var top = DADOS.topicos.filter(function (t) { return t.id === c.topico; })[0];
-    return '<details class="claim" id="a-' + U.esc(id) + '" data-v="' + c.veredito + '">' +
+    return '<details class="claim" data-anc id="a-' + U.esc(id) + '" data-v="' + c.veredito + '">' +
       '<summary><span class="cl-id">' + U.esc(id) + "</span><span class=\"cl-txt\">" + U.esc(c.texto) + '</span>' + U.chip(c.veredito) + "</summary>" +
       '<div class="cl-corpo"><p class="small muted">Dita por <b>' + U.esc(c.quem) + "</b>" +
       (mostrarTopico && top ? ' · tópico <a href="topicos.html#' + top.id + '">' + top.id + ". " + U.esc(top.titulo) + "</a>" : "") + "</p>" +

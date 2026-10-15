@@ -100,10 +100,10 @@
   // ---------- gráfico ----------
   function Grafico(cfg) {
     var el = document.createElement("section");
-    el.className = "card gcard"; el.id = "g-" + cfg.id;
+    el.className = "card gcard"; el.id = "g-" + cfg.id; el.setAttribute("data-anc", "");
     var ser = cfg.series.map(function (d, i) { return { def: d, pts: pontos(d), cor: "var(--s" + d.cor + ")", oculta: !!d.oculta }; });
     var anual = cfg.anual || ser.every(function (s) { return /^\d{4}$/.test(s.pts[0].t); });
-    var estado = { desde: null, tip: null };
+    var estado = { desde: null, pin: null };
     var span = Math.max.apply(null, ser.map(function (s) { return s.pts[s.pts.length - 1].x; })) - Math.min.apply(null, ser.map(function (s) { return s.pts[0].x; }));
     var ranges = span > 12 ? [["Tudo", null], ["Desde 2012", 2012], ["Desde 2019", 2019]] : [];
     if (cfg.id === "china" || cfg.id === "pobreza") ranges = [["Tudo", null], ["Desde 2000", 2000], ["Desde 2012", 2012]];
@@ -114,7 +114,7 @@
       '<p class="gfonte">' + ser.filter(function (s, i, a) { return !s.def.derive; }).map(function (s) {
         var sr = S[s.def.id]; return "<span>" + esc(sr.fonte) + (sr.url ? ' (<a href="' + U.url(sr.url) + '" target="_blank" rel="noopener noreferrer">fonte</a>)' : "") + (sr.baixado_em ? ", baixado em " + esc(sr.baixado_em) : "") + (sr.lida_na_fonte === false ? ". Valor de reportagem; tabela original não conferida" : "") + ".</span>";
       }).join(" ") + "</p>";
-    var plot = U.$("[data-plot]", el), tip = U.$("[data-tip]", el), DICA = '<span class="muted">Toque ou arraste sobre o gráfico para ver os valores.</span>';
+    var plot = U.$("[data-plot]", el), tip = U.$("[data-tip]", el), DICA = '<span class="muted">Toque ou arraste sobre o gráfico para ver os valores. Toque num ponto para marcá-lo no link.</span>', det = U.$("details.gdet", el);
 
     function visiveis() { return ser.filter(function (s) { return !s.oculta; }); }
     function legenda() {
@@ -178,10 +178,11 @@
       plot.insertAdjacentHTML("afterbegin", '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="' + esc(cfg.titulo + ". " + cfg.leitura.split(". ")[0]) + '">' + g + "</svg>");
       var svg = plot.querySelector("svg"), hit = U.$("[data-hit]", svg), guia = U.$("[data-guia]", svg), marc = U.$("[data-marc]", svg);
       var todos = [].concat.apply([], dados.map(function (d) { return d.p; }));
-      function mover(ev) {
-        var r = svg.getBoundingClientRect(), px = (ev.clientX - r.left) * (W / r.width), xm = x0 + (px - m.l) / (W - m.l - m.r) * (x1 - x0);
+      var ultimo = null;
+      function mostrarX(xm) {
+        var r = svg.getBoundingClientRect();
         var base = dados[0].p.reduce(function (a, p) { return Math.abs(p.x - xm) < Math.abs(a.x - xm) ? p : a; }), x = base.x, linhas = "", mk = "";
-        var tol = Math.max(0.6, (x1 - x0) / 40);
+        var tol = Math.max(0.6, (x1 - x0) / 40); ultimo = base.t;
         dados.forEach(function (d) {
           var p = d.p.reduce(function (a, q) { return Math.abs(q.x - x) < Math.abs(a.x - x) ? q : a; });
           if (Math.abs(p.x - x) > tol) return;
@@ -189,13 +190,17 @@
           mk += '<circle cx="' + sx(p.x).toFixed(1) + '" cy="' + sy(p.v).toFixed(1) + '" r="5" fill="' + d.s.cor + '" stroke="var(--surface)" stroke-width="2"/>';
         });
         guia.setAttribute("x1", sx(x)); guia.setAttribute("x2", sx(x)); guia.style.display = ""; marc.innerHTML = mk;
-        var gv = cfg.gov ? govDe(x) : ""; tip.innerHTML = "<b>" + esc(rotulo(base.t)) + "</b>" + (gv ? '<div class="gv">Governo: ' + gv + (govDe(x) === "Lula III" && x >= 2026 ? " (parcial)" : "") + "</div>" : "") + linhas;
+        var gv = cfg.gov ? govDe(x) : ""; tip.innerHTML = "<b>" + esc(rotulo(base.t)) + (estado.pin === base.t ? ' <span class="small muted">(marcado no link)</span>' : "") + "</b>" + (gv ? '<div class="gv">Governo: ' + gv + (govDe(x) === "Lula III" && x >= 2026 ? " (parcial)" : "") + "</div>" : "") + linhas;
         tip.hidden = false; if (!movel) { var tw = tip.offsetWidth, left = sx(x) * (r.width / W) + 12; if (left + tw > r.width) left = sx(x) * (r.width / W) - tw - 12; tip.style.left = Math.max(0, left) + "px"; }
       }
+      function mover(ev) { var r = svg.getBoundingClientRect(), px = (ev.clientX - r.left) * (W / r.width); mostrarX(x0 + (px - m.l) / (W - m.l - m.r) * (x1 - x0)); }
       function sair() { guia.style.display = "none"; marc.innerHTML = ""; if (movel) tip.innerHTML = DICA; else tip.hidden = true; }
+      function repouso() { var p = estado.pin && dados[0].p.filter(function (q) { return q.t === estado.pin; })[0]; if (p) mostrarX(p.x); else sair(); }
       hit.addEventListener("pointermove", mover); hit.addEventListener("pointerdown", mover);
-      hit.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") sair(); });
-      document.addEventListener("pointerdown", function (e) { if (!el.contains(e.target)) sair(); });
+      // Soltar marca (ou desmarca) o ponto mostrado: ele vai para o endereço.
+      hit.addEventListener("pointerup", function () { if (ultimo == null) return; estado.pin = estado.pin === ultimo ? null : ultimo; salvar(); repouso(); });
+      hit.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") repouso(); });
+      repouso();
     }
 
     function tabela() {
@@ -212,12 +217,24 @@
     }
     el.addEventListener("click", function (e) {
       var b = e.target.closest("button"); if (!b) return;
-      if (b.dataset.i != null) { var s = ser[+b.dataset.i]; if (!s.oculta && visiveis().length === 1) return; s.oculta = !s.oculta; legenda(); desenhar(); tabela(); }
-      else if (b.dataset.r != null) { estado.desde = ranges[+b.dataset.r][1]; legenda(); desenhar(); }
+      if (b.dataset.i != null) { var s = ser[+b.dataset.i]; if (!s.oculta && visiveis().length === 1) return; s.oculta = !s.oculta; legenda(); desenhar(); tabela(); salvar(); }
+      else if (b.dataset.r != null) { estado.desde = ranges[+b.dataset.r][1]; legenda(); desenhar(); salvar(); }
       else if (b.hasAttribute("data-csv")) csv();
     });
+    // Estado no endereço: <id>.r = período (ano inicial), .h = séries ocultas, .t = tabela aberta, .p = ponto marcado.
+    var KR = cfg.id + ".r", KH = cfg.id + ".h", KT = cfg.id + ".t", KP = cfg.id + ".p";
+    function ocultas() { var a = ser.map(function (x, i) { return x.oculta ? i : null; }).filter(function (x) { return x != null; }); return a.length ? a.join(",") : "-"; }
+    var padrao = ocultas();
+    function restaurar() {
+      var h = Estado.get(KH);
+      if (h != null) { var L = h === "-" ? [] : h.split(","); ser.forEach(function (x, i) { x.oculta = L.indexOf(String(i)) >= 0; }); if (!visiveis().length) ser[0].oculta = false; }
+      var r = Estado.get(KR); estado.desde = r != null && ranges.some(function (x) { return String(x[1]) === r; }) ? +r : null;
+      estado.pin = Estado.get(KP) || null;
+      det.open = Estado.get(KT) === "1";
+    }
+    function salvar() { var o = {}; o[KH] = ocultas() === padrao ? null : ocultas(); o[KR] = estado.desde; o[KP] = estado.pin; o[KT] = det.open; Estado.set(o); }
     var ro = window.ResizeObserver ? new ResizeObserver(function () { desenhar(); }) : null;
-    legenda(); tabela();
+    restaurar(); legenda(); tabela(); det.addEventListener("toggle", salvar);
     return { el: el, init: function () { desenhar(); if (ro) ro.observe(plot); else window.addEventListener("resize", desenhar); } };
   }
 
@@ -246,17 +263,23 @@
       }).join("");
       U.$("#comp-nota").textContent = c.nota + " Calendário: anos civis; 2016 foi atribuído a Dilma II.";
     }
-    U.$("#sel-comp").addEventListener("change", r); r();
+    var cv = Estado.get("c"); if (cv && COMP[cv]) U.$("#sel-comp").value = cv;
+    U.$("#sel-comp").addEventListener("change", function () { Estado.set({ c: U.$("#sel-comp").value === "pib" ? null : U.$("#sel-comp").value }); r(); }); r();
   }
 
   // ---------- montagem ----------
   comparador(U.$("#g-governo"));
   var host = U.$("#graficos"), grafs = [], ult = "";
   CONFIG.forEach(function (c) {
-    if (c.sec !== ult) { host.insertAdjacentHTML("beforeend", '<h2 id="sec-' + c.sec.replace(/\W+/g, "-").toLowerCase() + '">' + esc(c.sec) + "</h2>"); ult = c.sec; }
+    if (c.sec !== ult) { host.insertAdjacentHTML("beforeend", '<h2 data-anc id="sec-' + c.sec.replace(/\W+/g, "-").toLowerCase() + '">' + esc(c.sec) + "</h2>"); ult = c.sec; }
     var g = Grafico(c); host.appendChild(g.el); grafs.push(g);
   });
   grafs.forEach(function (g) { g.init(); });
-  U.$("#anc").innerHTML = '<a href="#g-governo">Por governo</a>' + CONFIG.map(function (c) { return '<a href="#g-' + c.id + '">' + esc(c.curto) + "</a>"; }).join("");
-  if (location.hash) { var t = document.getElementById(location.hash.slice(1)); if (t) setTimeout(function () { t.scrollIntoView(); }, 60); }
+  U.$("#g-governo").setAttribute("data-anc", "");
+  U.$("#anc").innerHTML = '<a href="#s=g-governo" data-ir="g-governo">Por governo</a>' + CONFIG.map(function (c) { return '<a href="#s=g-' + c.id + '" data-ir="g-' + c.id + '">' + esc(c.curto) + "</a>"; }).join("");
+  // Atalhos do topo: levam ao gráfico sem perder o resto do estado.
+  U.$("#anc").addEventListener("click", function (e) { var a = e.target.closest("[data-ir]"); if (!a) return; e.preventDefault(); Estado.set({ s: a.dataset.ir }, true); Estado.ir(); });
+  Estado.aoMudar(Estado.ir);
+  Estado.rastrear("main [data-anc]");
+  Estado.irDepois();
 })();

@@ -226,3 +226,7 @@ button { cursor: pointer; }
 .tip.fixa { position: static; max-width: none; min-width: 0; margin-top: 8px; box-shadow: none; background: var(--surface-2); border-color: var(--line); min-height: 92px; }
 .tip.fixa .row { max-width: 360px; }
 .menu a { scroll-margin-inline: 24px; }
+
+[data-anc] { scroll-margin-top: 120px; }
+.gl-term.alvo { outline: 3px solid var(--focus); outline-offset: 2px; }
+.gl-term dt a { text-decoration: none; }

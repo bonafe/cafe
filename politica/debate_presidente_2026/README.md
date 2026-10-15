@@ -10,6 +10,9 @@ Site estático (HTML/CSS/JS, sem build) criado a partir de uma conversa de Whats
 - `matriz.html`: matriz de decisão com pesos e notas editáveis por pessoa.
 - `glossario.html`: termos.
 
+## Links que guardam o estado
+Tudo o que a pessoa muda na tela vai para o endereço (`#chave=valor&...`), então colar o link leva ao mesmo ponto: filtros, busca, itens abertos, séries ocultas, período e ponto marcado nos gráficos, pesos e notas da matriz e a posição de rolagem (`s`). A lógica está em `assets/estado.js`; links antigos (`#7`, `#g-fome`) continuam funcionando.
+
 ## Dados (`data/`) e como regenerar
 - `topicos.json`, `matriz.json`: fichas e matriz, escritas à mão (fonte da verdade).
 - `series/*.json`: baixadas das APIs oficiais por `scripts/baixar_series.py` (convenções em `series/_notas.md`).

@@ -25,27 +25,47 @@
       if (s && s.dados) { estado.perfil = s.perfil || estado.perfil; PERFIS.forEach(function (p) { if (s.dados[p.id]) estado.dados[p.id] = s.dados[p.id]; }); }
     } catch (e) { /* sem armazenamento: segue em memória */ }
     if (!estado.dados[estado.perfil]) estado.perfil = PERFIS[0].id; // estado salvo por versão antiga
-    importarHash();
+    doEndereco();
   }
   function salvar() { try { localStorage.setItem(KEY, JSON.stringify(estado)); } catch (e) {} }
 
-  function importarHash() {
-    var h = location.hash.replace(/^#/, "");
-    if (h.indexOf("w=") < 0) return;
-    var q = {}; h.split("&").forEach(function (kv) { var a = kv.split("="); q[a[0]] = a[1]; });
-    if (!q.w || q.w.length !== CRIT.length) return;
-    var d = { pesos: {}, notas: {} };
-    CRIT.forEach(function (c, i) { var n = parseInt(q.w[i], 10); if (n >= 0 && n <= 5) d.pesos[c.id] = n; });
-    (q.o || "").split(",").forEach(function (t) {
-      var a = t.split(":").map(Number);
-      if (a.length === 3 && CRIT[a[0]] && a[1] >= 1 && a[1] <= 5 && a[2] >= 1 && a[2] <= 5) d.notas[CRIT[a[0]].id] = { flavio: a[1], lula: a[2] };
+  // Estado no endereço: p = perfil, w = pesos (um dígito por critério), o = notas alteradas (índice:flávio:lula),
+  // c = critérios abertos, f = fichas abertas, i = "como ler" aberto, s = posição na página.
+  function igual(a, b) {
+    return CRIT.every(function (c) {
+      var pa = a.pesos[c.id], pb = b.pesos[c.id];
+      if ((pa === undefined ? 3 : pa) !== (pb === undefined ? 3 : pb)) return false;
+      var na = a.notas[c.id] || {}, nb = b.notas[c.id] || {};
+      return ["flavio", "lula"].every(function (k) { return (na[k] || base(c, k)) === (nb[k] || base(c, k)); });
     });
-    estado.dados.convidado = d; estado.perfil = "convidado";
   }
-  function linkAtual() {
+  function doEndereco() {
+    var q = Estado.todos(), perfil = q.p && estado.dados[q.p] ? q.p : null;
+    if (q.w && q.w.length === CRIT.length) {
+      var d = { pesos: {}, notas: {} };
+      CRIT.forEach(function (c, i) { var n = parseInt(q.w[i], 10); if (n >= 0 && n <= 5) d.pesos[c.id] = n; });
+      (q.o || "").split(",").forEach(function (t) {
+        var a = t.split(":").map(Number);
+        if (a.length === 3 && CRIT[a[0]] && a[1] >= 1 && a[1] <= 5 && a[2] >= 1 && a[2] <= 5) d.notas[CRIT[a[0]].id] = { flavio: a[1], lula: a[2] };
+      });
+      // Mesmo perfil e mesmos números: só seleciona. Senão, mostra como Convidado sem sobrescrever o de ninguém.
+      if (perfil && igual(estado.dados[perfil], d)) estado.perfil = perfil;
+      else { estado.dados.convidado = d; estado.perfil = "convidado"; }
+    } else if (perfil) estado.perfil = perfil;
+  }
+  function abertosDe(sel, prefixo) {
+    return [].slice.call(document.querySelectorAll(sel)).map(function (b) { return b.getAttribute("aria-controls").replace(prefixo, ""); }).join(",");
+  }
+  function urlSync() {
     var d = atual(), w = CRIT.map(function (c) { return peso(c); }).join(""), o = [];
-    CRIT.forEach(function (c, i) { var n = d.notas[c.id]; if (n) o.push(i + ":" + (n.flavio || base(c, "flavio")) + ":" + (n.lula || base(c, "lula"))); });
-    return location.origin + location.pathname + "#w=" + w + (o.length ? "&o=" + o.join(",") : "");
+    CRIT.forEach(function (c, i) { if (d.notas[c.id] && (mudada(c, "flavio") || mudada(c, "lula"))) o.push(i + ":" + nota(c, "flavio") + ":" + nota(c, "lula")); });
+    Estado.set({ p: estado.perfil, w: w, o: o.join(","), c: abertosDe(".abrir[aria-expanded=true]", /^b-/), f: abertosDe(".ficha-btn[aria-expanded=true]", /^f-/), i: !!$(".como").open });
+  }
+  function restaurarAbertos() {
+    var c = Estado.lista("c"), f = Estado.lista("f");
+    [].slice.call(document.querySelectorAll(".abrir")).forEach(function (b) { var on = c.indexOf(b.getAttribute("aria-controls").replace(/^b-/, "")) >= 0; b.setAttribute("aria-expanded", String(on)); $("#" + b.getAttribute("aria-controls")).hidden = !on; });
+    [].slice.call(document.querySelectorAll(".ficha-btn")).forEach(function (b) { var on = f.indexOf(b.getAttribute("aria-controls").replace(/^f-/, "")) >= 0; b.setAttribute("aria-expanded", String(on)); $("#" + b.getAttribute("aria-controls")).hidden = !on; });
+    $(".como").open = Estado.get("i", "") === "1";
   }
 
   function atual() { return estado.dados[estado.perfil]; }
@@ -108,7 +128,7 @@
     var cit = c.citado_por || {};
     var citado = [["pessoa_a", "Pessoa A"], ["pessoa_b", "Pessoa B"]].filter(function (p) { return (cit[p[0]] || []).length; })
       .map(function (p) { return p[1] + " falou disso na conversa (" + cit[p[0]].length + " msg)"; }).join(" · ");
-    return '<article class="card crit" id="c-' + c.id + '" data-crit="' + c.id + '">' +
+    return '<article class="card crit" data-anc id="c-' + c.id + '" data-crit="' + c.id + '">' +
       '<div class="crit-head"><div class="crit-titulo"><h3>' + esc(c.nome) + '</h3><span class="tipo">' + esc({ dados: "dados", valores: "valores", misto: "misto" }[c.tipo]) + "</span></div>" +
       '<p class="crit-perg muted small">' + esc(c.pergunta) + "</p>" +
       '<div class="peso-linha"><label class="sr" for="p-' + c.id + '">Peso de ' + esc(c.nome) + '</label>' +
@@ -170,7 +190,7 @@
     });
     $$tabs();
     renderResultado();
-    salvar();
+    salvar(); urlSync();
   }
   function $$tabs() {
     document.querySelectorAll(".tab").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.perfil === estado.perfil)); });
@@ -232,11 +252,12 @@
       if (t.dataset.perfil) { estado.perfil = t.dataset.perfil; sincronizar(); return; }
       if (t.classList.contains("abrir")) {
         var open = t.getAttribute("aria-expanded") === "true"; t.setAttribute("aria-expanded", String(!open));
-        $("#" + t.getAttribute("aria-controls")).hidden = open; return;
+        $("#" + t.getAttribute("aria-controls")).hidden = open; urlSync(); return;
       }
+      if (t.classList.contains("placar-in")) { e.preventDefault(); $("#resultado").scrollIntoView(); return; }
       if (t.classList.contains("ficha-btn")) {
         var o = t.getAttribute("aria-expanded") === "true"; t.setAttribute("aria-expanded", String(!o));
-        $("#" + t.getAttribute("aria-controls")).hidden = o; return;
+        $("#" + t.getAttribute("aria-controls")).hidden = o; urlSync(); return;
       }
       if (t.dataset.step || t.hasAttribute("data-reset")) {
         var art = t.closest("[data-crit]"), c = CRIT.filter(function (x) { return x.id === art.dataset.crit; })[0];
@@ -247,7 +268,7 @@
         sincronizar(); return;
       }
       if (t.id === "copiar") {
-        var url = linkAtual(), ok = function () { $("#copiado").textContent = "Link copiado."; };
+        urlSync(); var url = location.href, ok = function () { $("#copiado").textContent = "Link copiado."; };
         if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(ok, function () { prompt("Copie o link:", url); });
         else { $("#copiado").textContent = url; }
       }
@@ -257,5 +278,9 @@
     });
   }
 
-  carregar(); iniciar(); ligar(); sincronizar();
+  carregar(); iniciar(); ligar(); restaurarAbertos(); sincronizar();
+  document.addEventListener("toggle", function (e) { if (e.target.classList && e.target.classList.contains("como")) urlSync(); }, true);
+  Estado.aoMudar(function () { doEndereco(); restaurarAbertos(); sincronizar(); Estado.ir(); });
+  Estado.rastrear("main [data-anc]");
+  Estado.irDepois();
 })();

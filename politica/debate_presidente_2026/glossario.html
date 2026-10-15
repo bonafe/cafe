@@ -20,6 +20,7 @@
   <dl id="dl"></dl>
 </main>
 <div id="rodape"></div>
+<script src="assets/estado.js"></script>
 <script src="assets/site.js"></script>
 <script>
 (function () {
@@ -53,9 +54,20 @@
     ["Simples Nacional", "Regime de tributação simplificada para micro e pequenas empresas, com tetos de faturamento (MEI, ME e EPP)."],
     ["Pronampe", "Programa de crédito garantido para micro e pequenas empresas, criado em 2020."]
   ];
-  function r(f) { var b = (f || "").toLowerCase(); U.$("#dl").innerHTML = G.filter(function (g) { return !b || (g[0] + " " + g[1]).toLowerCase().indexOf(b) >= 0; })
-    .map(function (g) { return '<div class="card gl"><dt>' + U.esc(g[0]) + "</dt><dd>" + U.esc(g[1]) + "</dd></div>"; }).join("") || '<p class="muted">Nenhum termo encontrado.</p>'; }
-  U.$("#q").addEventListener("input", function (e) { r(e.target.value); }); r();
+  // Estado no endereço: q = busca, t = termo em destaque, s = posição.
+  var slug = function (t) { return t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); };
+  function r() {
+    var f = Estado.get("q", ""), b = f.toLowerCase(), alvo = Estado.get("t", "");
+    U.$("#dl").innerHTML = G.filter(function (g) { return !b || (g[0] + " " + g[1]).toLowerCase().indexOf(b) >= 0; })
+      .map(function (g) { var id = slug(g[0]); return '<div class="card gl gl-term' + (id === alvo ? " alvo" : "") + '" id="' + id + '" data-anc><dt><a href="' + Estado.href({ t: id, s: id }) + '">' + U.esc(g[0]) + "</a></dt><dd>" + U.esc(g[1]) + "</dd></div>"; }).join("") || '<p class="muted">Nenhum termo encontrado.</p>';
+  }
+  var primeira = true;
+  function tudo() { U.$("#q").value = Estado.get("q", ""); r(); if (primeira) Estado.irDepois(); primeira = false; }
+  U.$("#q").addEventListener("input", function (e) { Estado.set({ q: e.target.value.trim() ? e.target.value : null, t: null, s: null }); r(); });
+  document.addEventListener("click", function (e) { var a = e.target.closest(".gl-term dt a"); if (a) { setTimeout(r, 0); } });
+  Estado.aoMudar(tudo);
+  Estado.rastrear("main [data-anc]");
+  tudo();
 })();
 </script>
 <style>.busca input{width:100%;min-height:48px;border:1.5px solid var(--line);border-radius:12px;padding:0 14px;background:var(--surface);margin:4px 0 16px}dl{margin:0;display:grid;gap:10px}.gl{padding:14px 16px}.gl dt{font-weight:800;margin-bottom:4px}.gl dd{margin:0;color:var(--ink-2)}@media(min-width:720px){dl{grid-template-columns:1fr 1fr}}</style>
