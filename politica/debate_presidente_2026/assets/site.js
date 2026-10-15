@@ -1,7 +1,7 @@
 (function () {
   "use strict";
   var NAV = [["./", "Início", "index"], ["topicos.html", "Tópicos", "topicos"], ["graficos.html", "Gráficos", "graficos"],
-    ["verificacao.html", "Verificação", "verificacao"], ["matriz.html", "Matriz", "matriz"], ["glossario.html", "Glossário", "glossario"]];
+    ["verificacao.html", "Verificação", "verificacao"], ["diario.html", "Diário", "diario"], ["matriz.html", "Matriz", "matriz"], ["glossario.html", "Glossário", "glossario"]];
   var aqui = document.body.dataset.pagina || "";
 
   window.U = {

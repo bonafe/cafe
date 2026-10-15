@@ -48,6 +48,12 @@
   </section>
 
   <section>
+    <h2>Últimas do diário</h2>
+    <div class="grid g2" id="diario-ult"></div>
+    <p class="small"><a href="diario.html">Ver o diário completo</a></p>
+  </section>
+
+  <section>
     <h2>Os 15 tópicos</h2>
     <div class="grid g2" id="topicos"></div>
   </section>
@@ -88,6 +94,10 @@
   var ord = D.topicos.slice().sort(function (a, b) { return a.id - b.id; });
   U.$("#topicos").innerHTML = ord.map(function (t) {
     return '<a class="card tcard" href="topicos.html#' + t.id + '"><span class="kicker">Tópico ' + t.id + "</span>" + U.status(t.status) + "<h3>" + U.esc(t.titulo) + "</h3><p>" + U.esc(t.conclusao.split(". ")[0].replace(/\.$/, "")) + ".</p></a>";
+  }).join("");
+  U.$("#diario-ult").innerHTML = D.diario.entradas.slice(-2).reverse().map(function (e) {
+    var p = e.data.split("-");
+    return '<a class="card tcard" href="diario.html"><span class="kicker">' + p[2] + "/" + p[1] + "</span><h3>" + U.esc(e.titulo) + "</h3><p>" + U.esc(e.resumo.split(". ")[0].replace(/\.$/, "")) + ".</p></a>";
   }).join("");
   var L = [
     ["Preocupações iniciais", "A Pessoa B teme um novo governo e a soberania nacional; a Pessoa A fala de economia, dívida das famílias, STF e educação."],

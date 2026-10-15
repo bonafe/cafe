@@ -7,6 +7,7 @@ Site estático (HTML/CSS/JS, sem build) criado a partir de uma conversa de Whats
 - `topicos.html`: as 15 fichas (`#N` abre o tópico).
 - `graficos.html`: séries oficiais interativas (BCB, IBGE, Banco Mundial/FAO) e resumo por governo.
 - `verificacao.html`: as 42 afirmações com veredito, nota e fontes.
+- `diario.html`: registro curto e datado do que acontece depois da conversa, com tópico e links (`data/diario.json`, escrito à mão; entrada nova vai no fim do arquivo).
 - `matriz.html`: matriz de decisão com pesos e notas editáveis por pessoa.
 - `glossario.html`: termos.
 
@@ -14,7 +15,7 @@ Site estático (HTML/CSS/JS, sem build) criado a partir de uma conversa de Whats
 Tudo o que a pessoa muda na tela vai para o endereço (`#chave=valor&...`), então colar o link leva ao mesmo ponto: filtros, busca, itens abertos, séries ocultas, período e ponto marcado nos gráficos, pesos e notas da matriz e a posição de rolagem (`s`). A lógica está em `assets/estado.js`; links antigos (`#7`, `#g-fome`) continuam funcionando.
 
 ## Dados (`data/`) e como regenerar
-- `topicos.json`, `matriz.json`: fichas e matriz, escritas à mão (fonte da verdade).
+- `topicos.json`, `matriz.json`, `diario.json`: fichas e matriz, escritas à mão (fonte da verdade).
 - `series/*.json`: baixadas das APIs oficiais por `scripts/baixar_series.py` (convenções em `series/_notas.md`).
 - `series_manuais.json`: três séries de fome que vêm de reportagens (marcadas como não conferidas na fonte).
 - `mensagens.json` e o `.txt` original contêm a conversa inteira. **Não publicar.**

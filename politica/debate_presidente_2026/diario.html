@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Diário</title>
+<meta name="description" content="O que aconteceu depois da conversa, em resumo e com links, do mais recente ao mais antigo.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/estilo.css">
+<script>try { var t = localStorage.getItem("tema"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+</head>
+<body data-pagina="diario">
+<div id="nav"></div>
+<main class="wide">
+  <p class="kicker" style="margin-top:28px">Acompanhamento</p>
+  <h1>Diário</h1>
+  <p class="lede">O que vai acontecendo, em poucas linhas e com link. A entrada mais recente fica em cima; cada uma diz qual tópico mudou ou nasceu.</p>
+  <div class="filtros" id="filtros" role="group" aria-label="Filtrar por tipo"></div>
+  <ol class="diario" id="lista"></ol>
+</main>
+<div id="rodape"></div>
+<script src="data/dados.js"></script>
+<script src="assets/estado.js"></script>
+<script src="assets/site.js"></script>
+<script>
+(function () {
+  "use strict";
+  // Estado no endereço: f = tipo, s = posição.
+  var E = DADOS.diario.entradas.slice().reverse(), T = DADOS.diario.meta.tipos;
+  var tit = {}; DADOS.topicos.forEach(function (t) { tit[t.id] = t.titulo; });
+  function data(d) { var p = d.split("-"); return p[2] + "/" + p[1] + "/" + p[0]; }
+  function r() {
+    var f = Estado.get("f", "todos");
+    var cont = { todos: E.length }; E.forEach(function (e) { cont[e.tipo] = (cont[e.tipo] || 0) + 1; });
+    U.$("#filtros").innerHTML = [["todos", "Todos"]].concat(Object.keys(T).map(function (k) { return [k, T[k]]; })).filter(function (x) { return cont[x[0]]; })
+      .map(function (x) { return '<button type="button" class="fbtn" data-f="' + x[0] + '" aria-pressed="' + (f === x[0]) + '">' + U.esc(x[1]) + " (" + cont[x[0]] + ")</button>"; }).join("");
+    U.$("#lista").innerHTML = E.filter(function (e) { return f === "todos" || e.tipo === f; }).map(function (e, i) {
+      return '<li class="card dia"><p class="kicker">' + data(e.data) + " · " + U.esc(T[e.tipo] || e.tipo) + (i === 0 && f === "todos" ? " · mais recente" : "") + "</p><h3>" + U.esc(e.titulo) + "</h3><p>" + U.esc(e.resumo) + "</p>" +
+        (e.topicos.length ? '<p class="small">Tópico: ' + e.topicos.map(function (id) { return '<a href="topicos.html#' + id + '">' + id + (tit[id] ? " · " + U.esc(tit[id]) : "") + "</a>"; }).join("; ") + "</p>" : "") +
+        (e.links.length ? '<ul class="dlinks">' + e.links.map(function (l) { var ext = /^https?:/.test(l.url); return '<li><a href="' + U.esc(l.url) + '"' + (ext ? ' target="_blank" rel="noopener noreferrer"' : "") + ">" + U.esc(l.titulo) + (ext ? " ↗" : "") + "</a></li>"; }).join("") + "</ul>" : "") + "</li>";
+    }).join("");
+  }
+  document.addEventListener("click", function (ev) {
+    var b = ev.target.closest("[data-f]"); if (b) { Estado.set({ f: b.dataset.f === "todos" ? null : b.dataset.f, s: null }); r(); }
+  });
+  Estado.aoMudar(r); r(); Estado.irDepois();
+})();
+</script>
+<style>.diario{list-style:none;margin:0;padding:0;display:grid;gap:12px}.dia{padding:16px}.dia h3{margin:4px 0 6px}.dia p{margin:0 0 8px}.dlinks{margin:0;padding-left:18px;font-size:.875rem}.dlinks li{margin-bottom:4px}</style>
+</body>
+</html>

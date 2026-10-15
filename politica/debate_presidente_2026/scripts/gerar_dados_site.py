@@ -23,6 +23,7 @@ def js(nome, valor):
 
 topicos = json.load(open(D / "topicos.json", encoding="utf-8"))
 matriz = json.load(open(D / "matriz.json", encoding="utf-8"))
+diario = json.load(open(D / "diario.json", encoding="utf-8"))
 
 # série -> gráfico (âncora em graficos.html)
 SERIE_GRAFICO = {
@@ -55,6 +56,7 @@ dados = {
     "gerado_em": matriz["meta"]["versao"],
     "meta": {k: topicos["meta"][k] for k in ("escopo", "convencoes", "governos")},
     "matriz": matriz,
+    "diario": diario,
     "claims": claims,
     "topicos": tops,
     "veredito": {

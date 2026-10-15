@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "descricao": "Registro curto, em ordem cronológica, do que acontece depois da conversa original. Cada entrada aponta para o tópico afetado e traz os links das fontes. Escrito à mão; a entrada mais recente fica no fim do arquivo.",
+    "tipos": {
+      "pergunta": "Nova pergunta surgiu",
+      "dado": "Novo dado ou fonte",
+      "atualizacao": "Tópico ou site atualizado"
+    }
+  },
+  "entradas": [
+    {
+      "data": "2026-10-09",
+      "tipo": "atualizacao",
+      "titulo": "A conversa vira 15 tópicos",
+      "resumo": "Dois dias de conversa sobre economia, instituições e confiança nos dados foram organizados em tópicos, com a posição de cada pessoa e as dúvidas que ficaram.",
+      "topicos": [],
+      "links": [
+        {
+          "titulo": "Os tópicos",
+          "url": "topicos.html"
+        }
+      ]
+    },
+    {
+      "data": "2026-10-14",
+      "tipo": "dado",
+      "titulo": "Séries oficiais baixadas e comparadas com os números da IA",
+      "resumo": "PIB, IPCA, desocupação, dívida e outras séries foram baixadas direto do BCB, do IBGE e do Banco Mundial. Quase tudo bateu com a IA; o desemprego médio de 2025 e o rendimento de 2025 diferiram.",
+      "topicos": [
+        4,
+        5
+      ],
+      "links": [
+        {
+          "titulo": "Gráficos",
+          "url": "graficos.html"
+        },
+        {
+          "titulo": "IBGE/SIDRA, tabela 4099",
+          "url": "https://sidra.ibge.gov.br/tabela/4099"
+        }
+      ]
+    },
+    {
+      "data": "2026-10-14",
+      "tipo": "pergunta",
+      "titulo": "Sem os beneficiários do Bolsa Família, o desemprego de 2024 cairia de 6,9% para 6,1%",
+      "resumo": "Cálculo com os microdados da PNAD Contínua (visita 5 de 2024, o mais recente publicado). 16,6% dos desocupados recebiam Bolsa Família; tirando todos eles (e os ocupados que também recebem) da conta, a taxa de 2024 passa de 6,9% para 6,1%, uma queda de 0,8 ponto. Se só os desocupados beneficiários saíssem do numerador, a taxa iria a ≈ 5,7%. Também aparece o que a Isabela chamou de 'adicional': 10,9% das pessoas fora da força de trabalho recebiam Bolsa Família. Aplicando as mesmas proporções à taxa de jun-jul-ago/2026 (5,3%), o resultado seria ≈ 4,7% (estimativa: a proporção de 2026 não foi medida). Nada disso muda a conclusão da afirmação 6.1: o IBGE não exclui beneficiários, e a série é a mesma desde 2012. Limites: amostra da visita 5, 2.087 desocupados beneficiários; os pesos não dão a população total; recebimento de benefício é auto declarado.",
+      "topicos": [
+        6
+      ],
+      "links": [
+        {
+          "titulo": "Tópico 6 e afirmação 6.1",
+          "url": "topicos.html#6"
+        },
+        {
+          "titulo": "Script do cálculo (scripts/desemprego_sem_beneficiarios.py)",
+          "url": "https://github.com/bonafe/cafe/blob/main/politica/debate_presidente_2026/scripts/desemprego_sem_beneficiarios.py"
+        },
+        {
+          "titulo": "IBGE, microdados da PNAD Contínua anual, visita 5",
+          "url": "https://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Anual/Microdados/Visita/Visita_5/"
+        },
+        {
+          "titulo": "IBGE/SIDRA, tabela 6318 (condição na força de trabalho)",
+          "url": "https://sidra.ibge.gov.br/tabela/6318"
+        },
+        {
+          "titulo": "MDS, Bolsa Família em junho de 2026",
+          "url": "https://www.gov.br/mds/pt-br/acoes-e-programas/bolsa-familia/arquivos/06_live_junho_2026.pdf"
+        }
+      ]
+    }
+  ]
+}
