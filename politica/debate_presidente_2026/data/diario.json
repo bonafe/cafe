@@ -71,6 +71,38 @@
           "url": "https://www.gov.br/mds/pt-br/acoes-e-programas/bolsa-familia/arquivos/06_live_junho_2026.pdf"
         }
       ]
+    },
+    {
+      "data": "2026-10-14",
+      "tipo": "pergunta",
+      "titulo": "A Gazeta do Povo diz que quem vive de Bolsa Família fica fora da conta. E a hipótese de mais gente procurando trabalho?",
+      "resumo": "Trecho lido só em captura de tela (a matéria inteira e a data não foram conferidas): a Gazeta do Povo diz que o cálculo do IBGE exclui quem 'optou por não trabalhar', incluindo 'quem vive de Bolsa Família'. A conclusão da afirmação 6.1 se mantém, mas a frase está imprecisa: o IBGE não olha se a pessoa recebe benefício, e sim se trabalhou, procurou e estava disponível. Por isso 16,6% dos desocupados de 2024 recebiam Bolsa Família e estavam contados. Quem não procura emprego fica fora da força de trabalho, recebendo benefício ou não. Segunda pergunta (a Isabela): a queda do desemprego poderia refletir perda de poder de compra, com mais gente procurando trabalho? Se fosse isso, a participação na força de trabalho subiria. Pela PNAD ela ficou praticamente parada: 62,9% em 2012, 63,6% em 2019 e 62,2% em 2025 (média dos trimestres). O nível de ocupação subiu de 56,0% (2019) para 58,7% (2025), então a queda do desemprego veio de mais gente ocupada, não de mais gente na fila. Esse dado não descarta que as pessoas trabalhem mais ou em mais de um emprego por necessidade, nem diz nada sobre a qualidade dos postos (informalidade em 37,4%). Falta cruzar com o rendimento real, o endividamento e a informalidade.",
+      "topicos": [
+        6,
+        4
+      ],
+      "links": [
+        {
+          "titulo": "Tópico 6 e afirmação 6.1",
+          "url": "topicos.html#6"
+        },
+        {
+          "titulo": "Aos Fatos: IBGE não conta beneficiário do Bolsa Família como empregado",
+          "url": "https://www.aosfatos.org/noticias/ibge-bolsa-familia-empregado/"
+        },
+        {
+          "titulo": "IBGE Explica: desemprego",
+          "url": "https://ibge.gov.br/explica/desemprego.php"
+        },
+        {
+          "titulo": "IBGE/SIDRA, tabela 4093 (participação e nível da ocupação)",
+          "url": "https://sidra.ibge.gov.br/tabela/4093"
+        },
+        {
+          "titulo": "Gráficos: rendimento real e desemprego",
+          "url": "graficos.html"
+        }
+      ]
     }
   ]
 }
